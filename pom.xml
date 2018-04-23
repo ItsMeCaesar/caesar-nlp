@@ -21,8 +21,16 @@
             </activation>
             <properties>
                 <log4j_appender>ALL, consoleAppender</log4j_appender>
-                <nosql_uri>mongodb://development:pa55w0rd@localhost:27017/devdb</nosql_uri>
+                <nosql_uri>mongodb://localhost:12345/development</nosql_uri>
             </properties>
+            
+            <dependencies>
+                <dependency>
+                    <groupId>de.flapdoodle.embed</groupId>
+                    <artifactId>de.flapdoodle.embed.mongo</artifactId>
+                    <version>2.0.3</version>
+                </dependency>
+            </dependencies>
             
             <build>
                 <resources>
@@ -33,6 +41,7 @@
                     </resource>
                 </resources>
                 <plugins>
+                    
                     <!-- JETTY -->
                     <plugin>
                         <groupId>org.eclipse.jetty</groupId>
@@ -54,38 +63,7 @@
                         <dependencies>
                         </dependencies>
                     </plugin>
-                    
-                    <!-- Maven MongoDB Plugin -->
-                    <plugin>
-                        <groupId>com.syncleus.maven.plugins</groupId>
-                        <artifactId>maven-mongodb-plugin</artifactId>
-                        <version>1.1.1</version>
-                        <executions>
-                            <execution>
-                                <id>start</id>
-                                <goals>
-                                    <goal>start</goal>
-                                </goals>
-                                <configuration>
-                                    <port>27017</port>
-                                    <proxyUser>development</proxyUser>
-                                    <proxyPassword>pa55w0rd</proxyPassword>
-                                    <initializations>
-                                        <initialization>
-                                            <databaseName>devdb</databaseName>
-                                        </initialization>
-                                    </initializations>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>stop</id>
-                                <goals>
-                                    <goal>stop</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                                        
+                                       
                 </plugins>
             </build>            
         </profile>

@@ -4,7 +4,14 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.hicaesar.nlp.support.exception.CaesarException;
 import com.hicaesar.nlp.support.exception.CaesarExceptionMapper;
 import static com.hicaesar.nlp.support.log.CaesarLog.methodLog;
-
+import de.flapdoodle.embed.mongo.MongodExecutable;
+import de.flapdoodle.embed.mongo.MongodProcess;
+import de.flapdoodle.embed.mongo.MongodStarter;
+import de.flapdoodle.embed.mongo.config.IMongodConfig;
+import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
+import de.flapdoodle.embed.mongo.config.Net;
+import de.flapdoodle.embed.mongo.distribution.Version;
+import de.flapdoodle.embed.process.runtime.Network;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +35,6 @@ import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.ServletDeploymentContext;
 import org.glassfish.jersey.test.grizzly.GrizzlyWebTestContainerFactory;
 import org.glassfish.jersey.test.spi.TestContainerFactory;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -38,6 +44,9 @@ import org.junit.Test;
 public class BaseTest extends JerseyTest {
 
     private static final Logger LOG = Logger.getLogger(BaseTest.class);
+
+    private MongodExecutable mongodExecutable;
+    private MongodProcess mongod;
 
     /**
      * Set Jackson as provider
@@ -50,14 +59,44 @@ public class BaseTest extends JerseyTest {
     }
 
     /**
-     * Setup the test class
+     * Setup test
      *
+     * @throws Exception
      */
-    @BeforeClass
-    public static void setUpClass() {
+    @Override
+    public void setUp() throws Exception {
 
-        methodLog(LOG, "setUpClass");
+        methodLog(LOG, "setUp");
 
+        final MongodStarter starter = MongodStarter.getDefaultInstance();
+
+        final IMongodConfig mongodConfig = new MongodConfigBuilder()
+                .version(Version.Main.PRODUCTION)
+                .net(new Net("localhost", 12345, Network.localhostIsIPv6()))
+                .build();
+
+        mongodExecutable = starter.prepare(mongodConfig);
+        mongod = mongodExecutable.start();
+
+        super.setUp();
+
+    }
+
+    /**
+     * Finishing tests
+     *
+     * @throws Exception
+     */
+    @Override
+    public void tearDown() throws Exception {
+        super.tearDown();
+        
+        methodLog(LOG, "tearDown");
+
+        if (this.mongod != null) {
+            this.mongod.stop();
+            this.mongodExecutable.stop();
+        }
     }
 
     /**
@@ -68,10 +107,10 @@ public class BaseTest extends JerseyTest {
      */
     protected DeploymentContext configureDeployment(final Class<?>... classes) {
         final List<Class<?>> classesList = new ArrayList<>();
-        
+
         classesList.add(CaesarExceptionMapper.class);
         classesList.addAll(Arrays.asList(classes));
-        
+
         final Class<?>[] resources = classesList.toArray(new Class<?>[classesList.size()]);
         final ResourceConfig rc = new ResourceConfig(resources);
         final Map<String, Object> properties = new HashMap<>();
