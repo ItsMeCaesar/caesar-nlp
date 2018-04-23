@@ -35,6 +35,8 @@ import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.ServletDeploymentContext;
 import org.glassfish.jersey.test.grizzly.GrizzlyWebTestContainerFactory;
 import org.glassfish.jersey.test.spi.TestContainerFactory;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -45,8 +47,8 @@ public class BaseTest extends JerseyTest {
 
     private static final Logger LOG = Logger.getLogger(BaseTest.class);
 
-    private MongodExecutable mongodExecutable;
-    private MongodProcess mongod;
+    private static MongodExecutable mongodExecutable;
+    private static MongodProcess mongod;
 
     /**
      * Set Jackson as provider
@@ -63,10 +65,10 @@ public class BaseTest extends JerseyTest {
      *
      * @throws Exception
      */
-    @Override
-    public void setUp() throws Exception {
+    @BeforeClass
+    public static void beforeClass() throws Exception {
 
-        methodLog(LOG, "setUp");
+        methodLog(LOG, "beforeClass");
 
         final MongodStarter starter = MongodStarter.getDefaultInstance();
 
@@ -78,8 +80,6 @@ public class BaseTest extends JerseyTest {
         mongodExecutable = starter.prepare(mongodConfig);
         mongod = mongodExecutable.start();
 
-        super.setUp();
-
     }
 
     /**
@@ -87,15 +87,14 @@ public class BaseTest extends JerseyTest {
      *
      * @throws Exception
      */
-    @Override
-    public void tearDown() throws Exception {
-        super.tearDown();
+    @AfterClass
+    public static void afterClass() throws Exception {
         
-        methodLog(LOG, "tearDown");
+        methodLog(LOG, "afterClass");
 
-        if (this.mongod != null) {
-            this.mongod.stop();
-            this.mongodExecutable.stop();
+        if (mongod != null) {
+            mongod.stop();
+            mongodExecutable.stop();
         }
     }
 

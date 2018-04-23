@@ -4,9 +4,11 @@ import com.hicaesar.nlp.support.exception.CaesarException;
 import com.hicaesar.nlp.test.BaseTest;
 import com.hicaesar.nlp.vo.EntityTypeVO;
 import com.hicaesar.nlp.ws.EntityTypeREST;
+import com.sun.javafx.scene.EnteredExitedHandler;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 import org.glassfish.jersey.test.DeploymentContext;
@@ -28,15 +30,31 @@ public final class EntityTypeTest extends BaseTest {
     public void testSaveNewEntityTypes() throws CaesarException {
 
         /* GET */
-        final Map<String, Object> params = new HashMap<>();
-        params.put("term", "você");
-
         Response response = super.get("entitytype");
         Assert.assertEquals(200, response.getStatus());
-        List<EntityTypeVO> items = response.readEntity(new GenericType<List<EntityTypeVO>>() {
+        List<EntityTypeVO> items1 = response.readEntity(new GenericType<List<EntityTypeVO>>() {
         });
-        Assert.assertTrue(items.isEmpty());
+        Assert.assertTrue(items1.isEmpty());
 
-       
+        final EntityTypeVO vo1 = new EntityTypeVO();
+        vo1.setName("org");
+        response = super.post("entitytype", Entity.json(vo1));
+        Assert.assertEquals(200, response.getStatus());
+        EntityTypeVO persistedVo1 = response.readEntity(EntityTypeVO.class);
+        Assert.assertFalse(persistedVo1.getId().isEmpty());
+
+        final EntityTypeVO vo2 = new EntityTypeVO();
+        vo2.setName("person");
+        response = super.post("entitytype", Entity.json(vo2));
+        Assert.assertEquals(200, response.getStatus());
+        EntityTypeVO persistedVo2 = response.readEntity(EntityTypeVO.class);
+        Assert.assertFalse(persistedVo2.getId().isEmpty());
+
+        response = super.get("entitytype");
+        Assert.assertEquals(200, response.getStatus());
+        List<EntityTypeVO> items2 = response.readEntity(new GenericType<List<EntityTypeVO>>() {
+        });
+        Assert.assertEquals(2, items2.size());
+
     }
 }
