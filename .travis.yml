@@ -1,3 +1,4 @@
 language: java
 sudo: false
+before_script: npm install -g @angular/cli
 script: mvn clean package
