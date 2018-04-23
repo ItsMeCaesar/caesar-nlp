@@ -7,6 +7,7 @@ package com.hicaesar.nlp.support;
 public enum RepositoryCollectionType {
 
     DOMAIN,
-    CORE_ENTITY;
+    CORE_ENTITY,
+    ENTITY_TYPE;
 
 }

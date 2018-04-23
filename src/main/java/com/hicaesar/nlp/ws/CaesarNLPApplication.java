@@ -34,17 +34,7 @@ public final class CaesarNLPApplication extends Application {
         resources.add(ResponseCORSFilter.class);
         resources.add(CaesarExceptionMapper.class);
 
-//        resources.add(BotREST.class);
-//        resources.add(BotConfigREST.class);
-//        resources.add(SessionChatREST.class);
-//        resources.add(ChatraREST.class);
-//        resources.add(ClientREST.class);
-//        resources.add(FacebookREST.class);
-//        resources.add(RDStationREST.class);
-//        resources.add(SessionREST.class);
-//        resources.add(LoginREST.class);
-//        resources.add(SurveyREST.class);
-//        resources.add(TextMemoryREST.class);
+        resources.add(EntityTypeREST.class);
 
         return resources;
     }

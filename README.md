@@ -1,4 +1,4 @@
-# Caesar NLP
+# Caesar NLP  [![Build Status](https://travis-ci.org/ItsMeCaesar/caesar-nlp.svg?branch=master)](https://travis-ci.org/ItsMeCaesar/caesar-nlp)
 Extract valued information using natural language processing
 
 ## Get Started
