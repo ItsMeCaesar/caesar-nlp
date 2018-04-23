@@ -18,9 +18,9 @@ public enum ConstantType {
 
     static {
         try {
-            properties.load(ConstantType.class.getClassLoader().getResourceAsStream("constants.properties"));
+            properties.load(ConstantType.class.getClassLoader().getResourceAsStream("caesar.properties"));
         } catch (IOException e) {
-            LOG.error(e.getClass().getSimpleName() + ": constants properties from the system have not been loaded", e);
+            LOG.error(e.getClass().getSimpleName() + ": caesar properties from the system have not been loaded", e);
         }
     }
 

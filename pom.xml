@@ -21,6 +21,7 @@
             </activation>
             <properties>
                 <log4j_appender>ALL, consoleAppender</log4j_appender>
+                <nosql_uri>mongodb://development:pa55w0rd@localhost:27017/devdb</nosql_uri>
             </properties>
             
             <build>
@@ -53,6 +54,38 @@
                         <dependencies>
                         </dependencies>
                     </plugin>
+                    
+                    <!-- Maven MongoDB Plugin -->
+                    <plugin>
+                        <groupId>com.syncleus.maven.plugins</groupId>
+                        <artifactId>maven-mongodb-plugin</artifactId>
+                        <version>1.1.1</version>
+                        <executions>
+                            <execution>
+                                <id>start</id>
+                                <goals>
+                                    <goal>start</goal>
+                                </goals>
+                                <configuration>
+                                    <port>27017</port>
+                                    <proxyUser>development</proxyUser>
+                                    <proxyPassword>pa55w0rd</proxyPassword>
+                                    <initializations>
+                                        <initialization>
+                                            <databaseName>devdb</databaseName>
+                                        </initialization>
+                                    </initializations>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>stop</id>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                                        
                 </plugins>
             </build>            
         </profile>
@@ -60,11 +93,16 @@
         
         <profile>
             <id>STAGING</id>
+            <properties>
+                <log4j_appender>DEBUG, consoleAppender</log4j_appender>
+            </properties>
         </profile>
         
         <profile>
             <id>PRODUCTION</id>
-            
+            <properties>
+                <log4j_appender>INFO, consoleAppender</log4j_appender>
+            </properties>
             <build>
                 <plugins>
                     <!-- EXEC -->
@@ -217,6 +255,14 @@
     </dependencies>
 
     <build>
+        
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        
         <plugins>
             
             <!-- COMPILER -->
