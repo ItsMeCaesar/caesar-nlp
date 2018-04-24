@@ -1,7 +1,7 @@
 {
-  "name": "ngapp",
-  "version": "0.0.0",
-  "license": "MIT",
+  "name": "caesar-nlp",
+  "version": "0.0.1",
+  "license": "Apache 2.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
