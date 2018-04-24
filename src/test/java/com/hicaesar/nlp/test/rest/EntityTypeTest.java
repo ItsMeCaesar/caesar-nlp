@@ -4,6 +4,7 @@ import com.hicaesar.nlp.support.exception.CaesarException;
 import com.hicaesar.nlp.test.BaseTest;
 import com.hicaesar.nlp.vo.EntityTypeVO;
 import com.hicaesar.nlp.rest.EntityTypeREST;
+import com.hicaesar.nlp.vo.StatusVO;
 import java.util.List;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
@@ -53,5 +54,17 @@ public final class EntityTypeTest extends BaseTest {
         });
         Assert.assertEquals(2, items2.size());
 
+    }
+
+    @Test
+    public void testInvalidNewEntityType() throws CaesarException {
+
+        final EntityTypeVO vo1 = new EntityTypeVO();
+
+        Response response = super.post("entitytype", Entity.json(vo1));
+        Assert.assertEquals(400, response.getStatus());
+        
+        final StatusVO status = response.readEntity(StatusVO.class);
+        Assert.assertEquals("Parameter 'name' is required", status.getMsg());
     }
 }
