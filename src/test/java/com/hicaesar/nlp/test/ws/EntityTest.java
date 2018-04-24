@@ -71,11 +71,26 @@ public final class EntityTest extends BaseTest {
         });
         Assert.assertEquals(2, items2.size());
 
-        /* DELETE */ 
+        /* DELETE */
         response = super.delete("entity/" + items2.get(0).getId());
         Assert.assertEquals(200, response.getStatus());
         StatusVO status = response.readEntity(StatusVO.class);
         Assert.assertTrue(status.isOk());
+
+        /* GET LIST */
+        response = super.get("entity/list", params);
+        Assert.assertEquals(200, response.getStatus());
+        List<EntityVO> items3 = response.readEntity(new GenericType<List<EntityVO>>() {
+        });
+        Assert.assertEquals(1, items3.size());
+
+        /* GET LIST */
+        params.put("text", "unidentified");
+        response = super.get("entity/list", params);
+        Assert.assertEquals(200, response.getStatus());
+        List<EntityVO> items4 = response.readEntity(new GenericType<List<EntityVO>>() {
+        });
+        Assert.assertTrue(items4.isEmpty());
 
     }
 
@@ -102,7 +117,7 @@ public final class EntityTest extends BaseTest {
         Assert.assertEquals(200, response.getStatus());
 
         /* GET */
-        final Map<String, Object> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
         params.put("locale", locale.toString());
         params.put("text", "bruce willis");
 
@@ -112,5 +127,12 @@ public final class EntityTest extends BaseTest {
         Assert.assertEquals("person", item1.getType());
         Assert.assertEquals(locale.toString(), item1.getLocale());
         Assert.assertEquals("bruce willis", item1.getValue());
+
+        /* GET */
+        params.put("text", "Blze");
+        response = super.get("entity", params);
+        Assert.assertEquals(200, response.getStatus());
+        EntityVO item2 = response.readEntity(EntityVO.class);
+        Assert.assertNull(item2.getId());
     }
 }
