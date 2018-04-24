@@ -36,9 +36,9 @@ import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.ServletDeploymentContext;
 import org.glassfish.jersey.test.grizzly.GrizzlyWebTestContainerFactory;
 import org.glassfish.jersey.test.spi.TestContainerFactory;
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.gen5.api.AfterAll;
 
 /**
  *
@@ -50,6 +50,7 @@ public class BaseTest extends JerseyTest {
 
     private static MongodExecutable mongodExecutable;
     private static MongodProcess mongod;
+    private static boolean setUpIsDone;
 
     /**
      * Set Jackson as provider
@@ -71,16 +72,21 @@ public class BaseTest extends JerseyTest {
 
         methodLog(LOG, "beforeClass");
 
-        final MongodStarter starter = MongodStarter.getDefaultInstance();
+        if (!setUpIsDone) {
 
-        final IMongodConfig mongodConfig = new MongodConfigBuilder()
-                .version(Version.Main.PRODUCTION)
-                .net(new Net("localhost", 12345, Network.localhostIsIPv6()))
-                .build();
+            final MongodStarter starter = MongodStarter.getDefaultInstance();
 
-        mongodExecutable = starter.prepare(mongodConfig);
-        mongod = mongodExecutable.start();
+            final IMongodConfig mongodConfig = new MongodConfigBuilder()
+                    .version(Version.Main.PRODUCTION)
+                    .net(new Net("localhost", 12345, Network.localhostIsIPv6()))
+                    .build();
 
+            mongodExecutable = starter.prepare(mongodConfig);
+            mongod = mongodExecutable.start();
+
+            setUpIsDone = true;
+        }
+        RepositoryFactory.getDB().drop();
         RepositoryFactory.createIndexes();
     }
 
@@ -89,10 +95,10 @@ public class BaseTest extends JerseyTest {
      *
      * @throws Exception
      */
-    @AfterClass
-    public static void afterClass() throws Exception {
+    @AfterAll
+    public static void afterAll() throws Exception {
 
-        methodLog(LOG, "afterClass");
+        methodLog(LOG, "afterAll");
 
         if (mongod != null) {
             mongod.stop();
