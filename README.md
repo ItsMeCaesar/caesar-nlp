@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/ItsMeCaesar/caesar-nlp.svg?branch=master)](https://travis-ci.org/ItsMeCaesar/caesar-nlp)
+[![codecov](https://codecov.io/gh/ItsMeCaesar/caesar-nlp/branch/master/graph/badge.svg)](https://codecov.io/gh/ItsMeCaesar/caesar-nlp)
 
 # Caesar NLP  
 Extract valued information using natural language processing
