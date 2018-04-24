@@ -1,9 +1,9 @@
-package com.hicaesar.nlp.test.ws;
+package com.hicaesar.nlp.test.rest;
 
 import com.hicaesar.nlp.support.exception.CaesarException;
 import com.hicaesar.nlp.test.BaseTest;
 import com.hicaesar.nlp.vo.EntityTypeVO;
-import com.hicaesar.nlp.ws.EntityTypeREST;
+import com.hicaesar.nlp.rest.EntityTypeREST;
 import java.util.List;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;

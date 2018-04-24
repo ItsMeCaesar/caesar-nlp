@@ -270,6 +270,21 @@
                 </configuration>
             </plugin>
             
+            <!-- PMD -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.9.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                            <goal>cpd-check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
             <!--  COBERTURA JACOCO -->
             <plugin>
                 <groupId>org.jacoco</groupId>

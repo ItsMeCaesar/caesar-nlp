@@ -1,4 +1,4 @@
-package com.hicaesar.nlp.ws;
+package com.hicaesar.nlp.rest;
 
 import com.hicaesar.nlp.support.Constants;
 import com.hicaesar.nlp.support.exception.CaesarException;

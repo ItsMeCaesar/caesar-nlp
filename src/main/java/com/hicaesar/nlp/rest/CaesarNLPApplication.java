@@ -1,4 +1,4 @@
-package com.hicaesar.nlp.ws;
+package com.hicaesar.nlp.rest;
 
 
 import com.hicaesar.nlp.support.exception.CaesarExceptionMapper;
@@ -34,6 +34,7 @@ public final class CaesarNLPApplication extends Application {
         resources.add(ResponseCORSFilter.class);
         resources.add(CaesarExceptionMapper.class);
 
+        resources.add(DomainREST.class);
         resources.add(EntityREST.class);
         resources.add(EntityTypeREST.class);
 

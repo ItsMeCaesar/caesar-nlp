@@ -1,0 +1,98 @@
+{
+    "id": "",
+    "name": "Global",
+    "locale": "pt_BR",
+    "entitySynonyms": [
+        {
+            "value": "papai noel",
+            "synonyms": [
+                "bom velhinho", 
+                "são nicolau"
+            ]
+        }
+    ],
+    "intents": [
+        {
+            "text": "oi", 
+            "intent": "greet", 
+            "entities": []
+        },
+        {
+            "text": "bom dia", 
+            "intent": "greet", 
+            "entities": []
+        },
+        {
+            "text": "boa tarde", 
+            "intent": "greet", 
+            "entities": []
+        },
+        {
+            "text": "boa noite", 
+            "intent": "greet", 
+            "entities": []
+        },
+        {
+            "text": "olá", 
+            "intent": "greet", 
+            "entities": []
+        },
+        {
+            "text": "ok", 
+            "intent": "affirm", 
+            "entities": []
+        },
+        {
+            "text": "entendi", 
+            "intent": "affirm", 
+            "entities": []
+        },
+        {
+            "text": "ok, obrigado",
+            "intent": "affirm",
+            "entities": []
+        },
+        {
+            "text": "tchau", 
+            "intent": "goodbye", 
+            "entities": []
+        },
+        {
+            "text": "adeus", 
+            "intent": "goodbye", 
+            "entities": []
+        },
+        {
+            "text": "até mais", 
+            "intent": "goodbye", 
+            "entities": []
+        },
+        {
+            "text": "peço por você mesmo?", 
+            "intent": "ask_for_me", 
+            "entities": []
+        },
+        {
+            "text": "procuro você?", 
+            "intent": "ask_for_me", 
+            "entities": []
+        },
+        {
+            "text": "estou com um problema, pode me ajudar?", 
+            "intent": "ask_for_help", 
+            "entities": []
+        },
+        {
+            "text": "papai noel existe?", 
+            "intent": "ask_for_santa", 
+            "entities": [
+                {
+                    "start": 0,
+                    "end": 10,
+                    "value": "papai noel",
+                    "type": "misc"
+                }
+            ]
+        }
+    ]
+}

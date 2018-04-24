@@ -1,10 +1,10 @@
-package com.hicaesar.nlp.test.ws;
+package com.hicaesar.nlp.test.rest;
 
 import com.hicaesar.nlp.support.exception.CaesarException;
 import com.hicaesar.nlp.test.BaseTest;
 import com.hicaesar.nlp.vo.EntityVO;
 import com.hicaesar.nlp.vo.StatusVO;
-import com.hicaesar.nlp.ws.EntityREST;
+import com.hicaesar.nlp.rest.EntityREST;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
