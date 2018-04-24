@@ -84,20 +84,20 @@ public final class DomainREST {
     /**
      * Delete a domain
      *
-     * @param id
+     * @param domainID
      * @return
      * @throws CaesarException
      */
     @DELETE
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public StatusVO delete(@PathParam("id") final String id) throws CaesarException {
+    public StatusVO delete(@PathParam("id") final String domainID) throws CaesarException {
 
-        CaesarLog.getInstance().logWSEntering(LOG, "list", req.getRemoteAddr(), "", param("id", id));
+        CaesarLog.getInstance().logWSEntering(LOG, "delete", req.getRemoteAddr(), "", param("domainID", domainID));
 
         try {
 
-            validator.delete(id);
+            validator.delete(domainID);
 
         } catch (final CaesarException e) {
             throw CaesarException.webException(e);

@@ -134,20 +134,20 @@ public final class EntityREST {
     /**
      * Delete an entity
      *
-     * @param id
+     * @param entityID
      * @return
      * @throws CaesarException
      */
     @DELETE
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public StatusVO delete(@PathParam("id") final String id) throws CaesarException {
+    public StatusVO delete(@PathParam("id") final String entityID) throws CaesarException {
 
-        CaesarLog.getInstance().logWSEntering(LOG, "list", req.getRemoteAddr(), "", param("id", id));
+        CaesarLog.getInstance().logWSEntering(LOG, "delete", req.getRemoteAddr(), "", param("entityID", entityID));
 
         try {
 
-            validator.delete(id);
+            validator.delete(entityID);
 
         } catch (final CaesarException e) {
             throw CaesarException.webException(e);

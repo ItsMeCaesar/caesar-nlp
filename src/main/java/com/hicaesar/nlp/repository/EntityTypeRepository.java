@@ -58,10 +58,9 @@ public final class EntityTypeRepository {
 
         final List<EntityTypeVO> out = new ArrayList<>();
 
-        try (final MongoCursor<Document> cursor = collection.find().iterator()) {
+        try (MongoCursor<Document> cursor = collection.find().iterator()) {
             while (cursor.hasNext()) {
-                final Document doc = cursor.next();
-                out.add(EntityTypeBSON.parse(doc));
+                out.add(EntityTypeBSON.parse(cursor.next()));
             }
         }
 

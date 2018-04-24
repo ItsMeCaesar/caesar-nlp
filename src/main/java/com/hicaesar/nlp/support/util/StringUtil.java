@@ -103,7 +103,7 @@ public final class StringUtil {
 
         String out = null;
         for (int i = 0; out == null && args != null && i < args.length; i++) {
-            out = (args[i] == null || args[i].trim().isEmpty()) ? null : args[i].trim();
+            out = args[i] == null || args[i].trim().isEmpty() ? null : args[i].trim();
         }
         return out;
     }

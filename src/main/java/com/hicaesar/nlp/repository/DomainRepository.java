@@ -56,10 +56,9 @@ public final class DomainRepository {
 
         List<DomainVO> out = new ArrayList<>();
 
-        try (final MongoCursor<Document> cursor = collection.find().iterator()) {
+        try (MongoCursor<Document> cursor = collection.find().iterator()) {
             while (cursor.hasNext()) {
-                final Document doc = cursor.next();
-                out.add(DomainBSON.parse(doc));
+                out.add(DomainBSON.parse(cursor.next()));
             }
         }
 

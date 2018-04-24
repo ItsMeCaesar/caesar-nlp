@@ -43,7 +43,7 @@ public final class FileUtil {
             byte[] bytes = new byte[1024];
 
             final File file = new File(filepath);
-            try (final OutputStream out = new FileOutputStream(file)) {
+            try (OutputStream out = new FileOutputStream(file)) {
                 while ((read = is.read(bytes)) != -1) {
                     out.write(bytes, 0, read);
                 }
@@ -94,7 +94,7 @@ public final class FileUtil {
             final String parsedBase64 = base64.substring(index + 8);
             final File out = File.createTempFile(name, extension);
 
-            try (final FileOutputStream fop = new FileOutputStream(out)) {
+            try (FileOutputStream fop = new FileOutputStream(out)) {
 
                 final byte[] input = Base64.getMimeDecoder().decode(parsedBase64);
                 fop.write(input);
@@ -163,7 +163,7 @@ public final class FileUtil {
         final int buffer = 4096;
         try {
 
-            try (final FileInputStream fileInputStream = new FileInputStream(file); final BufferedReader br = new BufferedReader(new InputStreamReader(fileInputStream, Constants.ENCODING), buffer)) {
+            try (FileInputStream fileInputStream = new FileInputStream(file); BufferedReader br = new BufferedReader(new InputStreamReader(fileInputStream, Constants.ENCODING), buffer)) {
                 String str;
                 while ((str = br.readLine()) != null) {
                     out.append(str).append(readnewline ? "\n" : "");
