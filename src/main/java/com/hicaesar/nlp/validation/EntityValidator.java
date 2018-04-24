@@ -101,8 +101,6 @@ public final class EntityValidator {
 
         methodLog(LOG, "delete", param("id", id));
 
-        CommonValidator.validateRequired("id", id);
-
         repository.delete(id);
     }
 

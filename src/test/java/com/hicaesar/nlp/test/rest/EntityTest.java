@@ -135,4 +135,60 @@ public final class EntityTest extends BaseTest {
         EntityVO item2 = response.readEntity(EntityVO.class);
         Assert.assertNull(item2.getId());
     }
+
+    @Test
+    public void testInvalidNewEntity() throws CaesarException {
+
+        final EntityVO vo1 = new EntityVO();
+
+        Response response = super.post("entity", Entity.json(vo1));
+        Assert.assertEquals(400, response.getStatus());
+
+        final StatusVO status = response.readEntity(StatusVO.class);
+        Assert.assertEquals("Parameter 'locale' is required", status.getMsg());
+    }
+
+    @Test
+    public void testInvalidNewEntities() throws CaesarException {
+
+        final List<EntityVO> list = new ArrayList<>();
+        list.add(new EntityVO());
+
+        Response response = super.post("entity/list", Entity.json(list));
+        Assert.assertEquals(400, response.getStatus());
+
+        final StatusVO status = response.readEntity(StatusVO.class);
+        Assert.assertEquals("Parameter 'locale' is required", status.getMsg());
+    }
+
+    @Test
+    public void testInvalidGet() throws CaesarException {
+
+        Response response = super.get("entity", new HashMap<>());
+        Assert.assertEquals(400, response.getStatus());
+
+        final StatusVO status = response.readEntity(StatusVO.class);
+        Assert.assertEquals("Parameter 'locale' is required", status.getMsg());
+    }
+
+    @Test
+    public void testInvalidList() throws CaesarException {
+
+        Response response = super.get("entity/list", new HashMap<>());
+        Assert.assertEquals(400, response.getStatus());
+
+        final StatusVO status = response.readEntity(StatusVO.class);
+        Assert.assertEquals("Parameter 'locale' is required", status.getMsg());
+    }
+
+    @Test
+    public void testInvalidDelete() throws CaesarException {
+
+        Response response = super.delete("entity/1");
+        Assert.assertEquals(400, response.getStatus());
+
+        final StatusVO status = response.readEntity(StatusVO.class);
+        Assert.assertEquals("invalid hexadecimal representation of an ObjectId: [1]", status.getMsg());
+    }
+
 }
