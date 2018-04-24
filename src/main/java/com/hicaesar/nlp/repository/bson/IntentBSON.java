@@ -2,7 +2,7 @@ package com.hicaesar.nlp.repository.bson;
 
 import static com.hicaesar.nlp.support.log.CaesarLog.methodLog;
 import static com.hicaesar.nlp.support.log.CaesarLog.param;
-import com.hicaesar.nlp.vo.EntityVO;
+import com.hicaesar.nlp.vo.IntentEntityVO;
 import com.hicaesar.nlp.vo.IntentVO;
 import com.mongodb.BasicDBList;
 import java.util.ArrayList;
@@ -100,7 +100,7 @@ public class IntentBSON {
 
             final BasicDBList out = new BasicDBList();
             vo.getEntities().forEach(e
-                    -> out.add(EntityBSON.builder(e).build())
+                    -> out.add(IntentEntityBSON.builder(e).build())
             );
             return out;
         }
@@ -136,7 +136,7 @@ public class IntentBSON {
 
             final String text = d.getString(TEXT_KEY);
             final String intent = d.getString(INTENT_KEY);
-            final List<EntityVO> entities = parseEntities(d);
+            final List<IntentEntityVO> entities = parseEntities(d);
 
             final IntentVO out = new IntentVO();
             out.setText(text);
@@ -152,15 +152,15 @@ public class IntentBSON {
          * @param d
          * @return
          */
-        private List<EntityVO> parseEntities(final Document d) {
+        private List<IntentEntityVO> parseEntities(final Document d) {
 
             methodLog(LOG, "parseEntities", param("d", d));
 
             final List<Object> array = (List<Object>) d.get(ENTITIES_KEY);
-            final List<EntityVO> out = new ArrayList<>();
+            final List<IntentEntityVO> out = new ArrayList<>();
 
             array.forEach(val
-                    -> out.add(EntityBSON.parse((Document) val))
+                    -> out.add(IntentEntityBSON.parse((Document) val))
             );
 
             return out;

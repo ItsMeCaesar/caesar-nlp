@@ -14,7 +14,7 @@ public final class RepositoryCollectionTypeTest {
     public void test() {
         Assert.assertEquals(3, RepositoryCollectionType.values().length);
         
-        Assert.assertEquals(RepositoryCollectionType.CORE_ENTITY, RepositoryCollectionType.valueOf("CORE_ENTITY"));
+        Assert.assertEquals(RepositoryCollectionType.ENTITY, RepositoryCollectionType.valueOf("ENTITY"));
         Assert.assertEquals(RepositoryCollectionType.DOMAIN, RepositoryCollectionType.valueOf("DOMAIN"));
         Assert.assertEquals(RepositoryCollectionType.ENTITY_TYPE, RepositoryCollectionType.valueOf("ENTITY_TYPE"));
     }

@@ -1,6 +1,5 @@
 package com.hicaesar.nlp.repository;
 
-
 import com.hicaesar.nlp.support.ConstantType;
 import com.hicaesar.nlp.support.RepositoryCollectionType;
 import com.hicaesar.nlp.support.exception.CaesarException;
@@ -12,6 +11,7 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.IndexOptions;
+import com.mongodb.client.model.Indexes;
 import javax.ws.rs.core.Response.Status;
 import org.apache.log4j.Logger;
 import org.bson.Document;
@@ -55,6 +55,20 @@ public final class RepositoryFactory {
         } catch (Exception e) {
             throw CaesarException.exception(e, Status.INTERNAL_SERVER_ERROR, "Error instantiating the database");
         }
+    }
+
+    /**
+     * Create required indexes
+     *
+     * @throws CaesarException
+     */
+    public static void createIndexes() throws CaesarException {
+
+        methodLog(LOG, "createIndexes");
+        
+        createIndex(RepositoryCollectionType.ENTITY, Indexes.text("value"));
+        createIndex(RepositoryCollectionType.ENTITY, Indexes.ascending("locale"));
+
     }
 
     /**

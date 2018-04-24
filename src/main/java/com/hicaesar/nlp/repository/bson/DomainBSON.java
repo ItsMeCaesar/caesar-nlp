@@ -4,7 +4,7 @@ import static com.hicaesar.nlp.support.log.CaesarLog.methodLog;
 import static com.hicaesar.nlp.support.log.CaesarLog.param;
 import com.hicaesar.nlp.support.util.StringUtil;
 import com.hicaesar.nlp.vo.DomainVO;
-import com.hicaesar.nlp.vo.EntitySynonymVO;
+import com.hicaesar.nlp.vo.IntentEntitySynonymVO;
 import com.hicaesar.nlp.vo.IntentVO;
 
 import com.mongodb.BasicDBList;
@@ -108,7 +108,7 @@ public class DomainBSON {
 
             final BasicDBList out = new BasicDBList();
             vo.getEntitySynonyms().forEach(es
-                    -> out.add(EntitySynonymBSON.builder(es).build())
+                    -> out.add(IntentEntitySynonymBSON.builder(es).build())
             );
             return out;
         }
@@ -161,7 +161,7 @@ public class DomainBSON {
             final ObjectId id = d.getObjectId(ID_KEY);
             final String name = d.getString(NAME_KEY);
             final String locale = d.getString(LOCALE_KEY);
-            final List<EntitySynonymVO> entitySynonyms = parseEntitySynonyms(d);
+            final List<IntentEntitySynonymVO> entitySynonyms = parseEntitySynonyms(d);
             final List<IntentVO> intents = parseIntents(d);
 
             final DomainVO out = new DomainVO();
@@ -180,15 +180,15 @@ public class DomainBSON {
          * @param d
          * @return
          */
-        private List<EntitySynonymVO> parseEntitySynonyms(final Document d) {
+        private List<IntentEntitySynonymVO> parseEntitySynonyms(final Document d) {
 
             methodLog(LOG, "parseEntitySynonyms", param("d", d));
 
             final List<Object> array = (List<Object>) d.get(ENTITY_SYNONYMS_KEY);
-            final List<EntitySynonymVO> out = new ArrayList<>();
+            final List<IntentEntitySynonymVO> out = new ArrayList<>();
 
             array.forEach(val
-                    -> out.add(EntitySynonymBSON.parse((Document) val))
+                    -> out.add(IntentEntitySynonymBSON.parse((Document) val))
             );
 
             return out;

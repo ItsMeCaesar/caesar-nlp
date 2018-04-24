@@ -14,9 +14,9 @@ import org.apache.log4j.Logger;
  * @author samuelwaskow
  */
 public final class EntityTypeValidator {
-
+    
     private static final Logger LOG = Logger.getLogger(EntityTypeValidator.class);
-
+    
     private final EntityTypeRepository repository = new EntityTypeRepository();
 
     /**
@@ -27,9 +27,13 @@ public final class EntityTypeValidator {
      * @throws CaesarException
      */
     public EntityTypeVO save(final EntityTypeVO vo) throws CaesarException {
-
+        
         methodLog(LOG, "save", param(Constants.VO, vo));
-
+        
+        CommonValidator.validateRequired("name", vo.getName());
+        
+        vo.setName(vo.getName().toLowerCase());
+        
         return repository.save(vo);
     }
 
@@ -40,10 +44,10 @@ public final class EntityTypeValidator {
      * @throws CaesarException
      */
     public List<EntityTypeVO> list() throws CaesarException {
-
+        
         methodLog(LOG, "list");
-
+        
         return repository.list();
     }
-
+    
 }

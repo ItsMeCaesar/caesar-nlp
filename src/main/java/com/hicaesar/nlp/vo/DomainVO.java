@@ -12,7 +12,7 @@ public class DomainVO {
     protected String name;
     protected String locale;
     protected List<IntentVO> intents;
-    protected List<EntitySynonymVO> entitySynonyms;
+    protected List<IntentEntitySynonymVO> entitySynonyms;
 
     /**
      * Default Constructor
@@ -51,11 +51,11 @@ public class DomainVO {
         this.intents = intents;
     }
 
-    public List<EntitySynonymVO> getEntitySynonyms() {
+    public List<IntentEntitySynonymVO> getEntitySynonyms() {
         return entitySynonyms;
     }
 
-    public void setEntitySynonyms(List<EntitySynonymVO> entitySynonyms) {
+    public void setEntitySynonyms(List<IntentEntitySynonymVO> entitySynonyms) {
         this.entitySynonyms = entitySynonyms;
     }
 

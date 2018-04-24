@@ -1,6 +1,7 @@
 package com.hicaesar.nlp.test;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+import com.hicaesar.nlp.repository.RepositoryFactory;
 import com.hicaesar.nlp.support.exception.CaesarException;
 import com.hicaesar.nlp.support.exception.CaesarExceptionMapper;
 import static com.hicaesar.nlp.support.log.CaesarLog.methodLog;
@@ -80,6 +81,7 @@ public class BaseTest extends JerseyTest {
         mongodExecutable = starter.prepare(mongodConfig);
         mongod = mongodExecutable.start();
 
+        RepositoryFactory.createIndexes();
     }
 
     /**
@@ -89,7 +91,7 @@ public class BaseTest extends JerseyTest {
      */
     @AfterClass
     public static void afterClass() throws Exception {
-        
+
         methodLog(LOG, "afterClass");
 
         if (mongod != null) {

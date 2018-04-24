@@ -3,6 +3,7 @@ package com.hicaesar.nlp.test.ws;
 import com.hicaesar.nlp.support.exception.CaesarExceptionMapper;
 import com.hicaesar.nlp.support.filter.ResponseCORSFilter;
 import com.hicaesar.nlp.ws.CaesarNLPApplication;
+import com.hicaesar.nlp.ws.EntityREST;
 import com.hicaesar.nlp.ws.EntityTypeREST;
 
 import java.util.Set;
@@ -21,11 +22,12 @@ public final class CaesarNLPApplicationTest {
     public void testGetClasses() {
 
         final Set<Class<?>> endpoints = app.getClasses();
-        Assert.assertEquals(3, endpoints.size());
+        Assert.assertEquals(4, endpoints.size());
 
         Assert.assertTrue(endpoints.contains(ResponseCORSFilter.class));
         Assert.assertTrue(endpoints.contains(CaesarExceptionMapper.class));
 
+        Assert.assertTrue(endpoints.contains(EntityREST.class));
         Assert.assertTrue(endpoints.contains(EntityTypeREST.class));
 
     }

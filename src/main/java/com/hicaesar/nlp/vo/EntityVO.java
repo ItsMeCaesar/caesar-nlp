@@ -1,13 +1,16 @@
 package com.hicaesar.nlp.vo;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 /**
  *
  * @author samuelwaskow
  */
 public final class EntityVO {
 
-    private int start;
-    private int end;
+    private String id;
+    private String locale;
     private String value;
     private String type;
 
@@ -18,26 +21,60 @@ public final class EntityVO {
         super();
     }
 
+    /**
+     * Compute hash code by using Apache Commons Lang HashCodeBuilder.
+     *
+     * @return
+     */
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(this.locale)
+                .append(this.value)
+                .append(this.type)
+                .hashCode();
+    }
+
+    /**
+     * Compute equals by using Apache Commons Lang EqualsBuilder.
+     *
+     * @param obj
+     * @return
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj != null && obj instanceof EntityVO) {
+            final EntityVO other = (EntityVO) obj;
+            return new EqualsBuilder()
+                    .append(this.locale, other.locale)
+                    .append(this.value, other.value)
+                    .append(this.type, other.type)
+                    .isEquals();
+        } else {
+            return false;
+        }
+    }
+
     @Override
     public String toString() {
-        return "{start=" + start + ", end=" + end + ", value=" + value + ", type=" + type + '}';
+        return "{id=" + id + ", locale=" + locale + ", value=" + value + ", type=" + type + '}';
     }
 
     /* Gets And Sets */
-    public int getStart() {
-        return start;
+    public String getId() {
+        return id;
     }
 
-    public void setStart(int start) {
-        this.start = start;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public int getEnd() {
-        return end;
+    public String getLocale() {
+        return locale;
     }
 
-    public void setEnd(int end) {
-        this.end = end;
+    public void setLocale(String locale) {
+        this.locale = locale;
     }
 
     public String getValue() {

@@ -1,10 +1,9 @@
 package com.hicaesar.nlp.repository.bson;
 
-
 import com.hicaesar.nlp.support.Constants;
 import static com.hicaesar.nlp.support.log.CaesarLog.methodLog;
 import static com.hicaesar.nlp.support.log.CaesarLog.param;
-import com.hicaesar.nlp.vo.CoreEntityVO;
+import com.hicaesar.nlp.vo.EntityVO;
 
 import org.apache.log4j.Logger;
 import org.bson.Document;
@@ -36,7 +35,7 @@ public final class CoreEntityBSON {
      * @param vo
      * @return
      */
-    public static Builder builder(final CoreEntityVO vo) {
+    public static Builder builder(final EntityVO vo) {
 
         methodLog(LOG, "builder", param(Constants.VO, vo));
 
@@ -49,7 +48,7 @@ public final class CoreEntityBSON {
      * @param doc
      * @return
      */
-    public static CoreEntityVO parse(final Document doc) {
+    public static EntityVO parse(final Document doc) {
 
         methodLog(LOG, "parse", param("doc", doc));
         return new Parser(doc).parse();
@@ -60,14 +59,14 @@ public final class CoreEntityBSON {
      */
     public static class Builder {
 
-        private final CoreEntityVO vo;
+        private final EntityVO vo;
 
         /**
          * Constructor
          *
          * @param vo
          */
-        public Builder(final CoreEntityVO vo) {
+        public Builder(final EntityVO vo) {
             super();
             this.vo = vo;
         }
@@ -114,7 +113,7 @@ public final class CoreEntityBSON {
          *
          * @return The Value Object
          */
-        public CoreEntityVO parse() {
+        public EntityVO parse() {
 
             methodLog(LOG, "parse");
 
@@ -125,7 +124,7 @@ public final class CoreEntityBSON {
             final String type = d.getString(TYPE_KEY);
             final String value = d.getString(VALUE_KEY);
 
-            final CoreEntityVO out = new CoreEntityVO();
+            final EntityVO out = new EntityVO();
             out.setId(id.toHexString());
             out.setLocale(locale);
             out.setType(type);

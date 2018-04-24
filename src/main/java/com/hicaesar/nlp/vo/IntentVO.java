@@ -10,7 +10,7 @@ public final class IntentVO {
 
     private String text;
     private String intent;
-    private List<EntityVO> entities;
+    private List<IntentEntityVO> entities;
 
     /**
      * Constructor
@@ -41,11 +41,11 @@ public final class IntentVO {
         this.intent = intent;
     }
 
-    public List<EntityVO> getEntities() {
+    public List<IntentEntityVO> getEntities() {
         return entities;
     }
 
-    public void setEntities(List<EntityVO> entities) {
+    public void setEntities(List<IntentEntityVO> entities) {
         this.entities = entities;
     }
 

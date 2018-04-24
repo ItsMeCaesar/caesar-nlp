@@ -34,6 +34,7 @@ public final class CaesarNLPApplication extends Application {
         resources.add(ResponseCORSFilter.class);
         resources.add(CaesarExceptionMapper.class);
 
+        resources.add(EntityREST.class);
         resources.add(EntityTypeREST.class);
 
         return resources;

@@ -34,7 +34,7 @@ public final class EntityTypeRepository {
 
         methodLog(LOG, "save", param(Constants.VO, vo));
 
-        final MongoCollection<Document> collection = RepositoryFactory.getCollection(RepositoryCollectionType.CORE_ENTITY);
+        final MongoCollection<Document> collection = RepositoryFactory.getCollection(RepositoryCollectionType.ENTITY);
 
         vo.setId(new ObjectId().toHexString());
 
@@ -54,7 +54,7 @@ public final class EntityTypeRepository {
 
         methodLog(LOG, "list");
 
-        final MongoCollection<Document> collection = RepositoryFactory.getCollection(RepositoryCollectionType.CORE_ENTITY);
+        final MongoCollection<Document> collection = RepositoryFactory.getCollection(RepositoryCollectionType.ENTITY);
 
         final List<EntityTypeVO> out = new ArrayList<>();
 

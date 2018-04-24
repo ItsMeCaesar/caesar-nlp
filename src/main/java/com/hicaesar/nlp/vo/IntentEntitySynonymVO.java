@@ -6,7 +6,7 @@ import java.util.List;
  *
  * @author samuelwaskow
  */
-public final class EntitySynonymVO {
+public final class IntentEntitySynonymVO {
 
     private String value;
     private List<String> synonyms;
@@ -14,7 +14,7 @@ public final class EntitySynonymVO {
     /**
      * Constructor
      */
-    public EntitySynonymVO() {
+    public IntentEntitySynonymVO() {
         super();
     }
 
