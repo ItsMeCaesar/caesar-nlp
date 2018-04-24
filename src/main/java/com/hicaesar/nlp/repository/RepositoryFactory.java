@@ -65,7 +65,7 @@ public final class RepositoryFactory {
     public static void createIndexes() throws CaesarException {
 
         methodLog(LOG, "createIndexes");
-        
+
         createIndex(RepositoryCollectionType.ENTITY, Indexes.text("value"));
         createIndex(RepositoryCollectionType.ENTITY, Indexes.ascending("locale"));
 
@@ -100,21 +100,6 @@ public final class RepositoryFactory {
         final MongoCollection<Document> collection = getDB().getCollection(collectionToCreate.name());
         final String status = collection.createIndex(indexToCreate, options);
         log.logDebug(status);
-    }
-
-    /**
-     * Removes an index from a collection
-     *
-     * @param collectionToRemove
-     * @param indexToRemove
-     * @throws CaesarException
-     */
-    public static void removeIndex(final RepositoryCollectionType collectionToRemove, final Bson indexToRemove) throws CaesarException {
-
-        methodLog(LOG, "removeIndex", "collectionToRemove [" + collectionToRemove + "]", "indexToRemove [" + indexToRemove + "]");
-
-        final MongoCollection<Document> collection = getDB().getCollection(collectionToRemove.name());
-        collection.dropIndex(indexToRemove);
     }
 
     /**

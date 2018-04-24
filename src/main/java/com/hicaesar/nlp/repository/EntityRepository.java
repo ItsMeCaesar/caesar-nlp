@@ -1,16 +1,12 @@
 package com.hicaesar.nlp.repository;
 
-
 import com.hicaesar.nlp.repository.bson.CoreEntityBSON;
 import static com.hicaesar.nlp.support.log.CaesarLog.methodLog;
 import static com.hicaesar.nlp.support.log.CaesarLog.param;
 
-
-
 import com.hicaesar.nlp.support.RepositoryCollectionType;
 import com.hicaesar.nlp.support.exception.CaesarException;
 import com.hicaesar.nlp.vo.EntityVO;
-
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
@@ -34,7 +30,6 @@ import org.bson.types.ObjectId;
 public final class EntityRepository {
 
     private static final Logger LOG = Logger.getLogger(EntityRepository.class);
-
 
     /**
      * Save a new domain
@@ -64,9 +59,9 @@ public final class EntityRepository {
      *
      * @throws CaesarException
      */
-    public void saveAll(final List<EntityVO> vos) throws CaesarException {
+    public void saveList(final List<EntityVO> vos) throws CaesarException {
 
-        methodLog(LOG, "saveAll", param("vos", vos));
+        methodLog(LOG, "saveList", param("vos", vos));
 
         final MongoCollection<Document> collection = RepositoryFactory.getCollection(RepositoryCollectionType.ENTITY);
 
@@ -76,11 +71,11 @@ public final class EntityRepository {
             docs.add(CoreEntityBSON.builder(vo).build());
         });
 
-        collection.insertMany(docs); 
+        collection.insertMany(docs);
     }
 
     /**
-     * Retrieve a entity
+     * Retrieve an entity
      *
      * @param locale
      * @param text
@@ -99,7 +94,7 @@ public final class EntityRepository {
         EntityVO out = new EntityVO();
 
         try (final MongoCursor<Document> cursor = collection.find(query).iterator()) {
-            while (cursor.hasNext()) {
+            if (cursor.hasNext()) {
                 final Document doc = cursor.next();
                 out = CoreEntityBSON.parse(doc);
             }

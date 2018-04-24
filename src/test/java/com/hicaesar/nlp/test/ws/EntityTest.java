@@ -5,6 +5,7 @@ import com.hicaesar.nlp.test.BaseTest;
 import com.hicaesar.nlp.vo.EntityVO;
 import com.hicaesar.nlp.vo.StatusVO;
 import com.hicaesar.nlp.ws.EntityREST;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -36,13 +37,14 @@ public final class EntityTest extends BaseTest {
         params.put("locale", locale.toString());
         params.put("text", "lama");
 
-        /* GET */
-        Response response = super.get("entity", params);
+        /* GET LIST  */
+        Response response = super.get("entity/list", params);
         Assert.assertEquals(200, response.getStatus());
         List<EntityVO> items1 = response.readEntity(new GenericType<List<EntityVO>>() {
         });
         Assert.assertTrue(items1.isEmpty());
 
+        /* POST */
         final EntityVO vo1 = new EntityVO();
         vo1.setLocale(locale.toString());
         vo1.setType("person");
@@ -62,17 +64,53 @@ public final class EntityTest extends BaseTest {
         EntityVO persistedVo2 = response.readEntity(EntityVO.class);
         Assert.assertFalse(persistedVo2.getId().isEmpty());
 
-        response = super.get("entity", params);
+        /* GET LIST */
+        response = super.get("entity/list", params);
         Assert.assertEquals(200, response.getStatus());
         List<EntityVO> items2 = response.readEntity(new GenericType<List<EntityVO>>() {
         });
         Assert.assertEquals(2, items2.size());
-        
+
+        /* DELETE */ 
         response = super.delete("entity/" + items2.get(0).getId());
         Assert.assertEquals(200, response.getStatus());
         StatusVO status = response.readEntity(StatusVO.class);
         Assert.assertTrue(status.isOk());
-        
 
+    }
+
+    @Test
+    public void testSaveList() throws CaesarException {
+
+        final Locale locale = new Locale("pt", "BR");
+
+        /* POST */
+        final List<EntityVO> list = new ArrayList<>();
+
+        final EntityVO vo1 = new EntityVO();
+        vo1.setLocale(locale.toString());
+        vo1.setType("person");
+        vo1.setValue("Bruce Willis");
+        list.add(vo1);
+
+        final EntityVO vo2 = new EntityVO();
+        vo2.setLocale(locale.toString());
+        vo2.setType("ORG");
+        vo2.setValue("Nações Unidas");
+
+        Response response = super.post("entity/list", Entity.json(list));
+        Assert.assertEquals(200, response.getStatus());
+
+        /* GET */
+        final Map<String, Object> params = new HashMap<>();
+        params.put("locale", locale.toString());
+        params.put("text", "bruce willis");
+
+        response = super.get("entity", params);
+        Assert.assertEquals(200, response.getStatus());
+        EntityVO item1 = response.readEntity(EntityVO.class);
+        Assert.assertEquals("person", item1.getType());
+        Assert.assertEquals(locale.toString(), item1.getLocale());
+        Assert.assertEquals("bruce willis", item1.getValue());
     }
 }

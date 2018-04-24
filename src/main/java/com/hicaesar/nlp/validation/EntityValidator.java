@@ -15,9 +15,9 @@ import org.apache.log4j.Logger;
  * @author samuelwaskow
  */
 public final class EntityValidator {
-    
+
     private static final Logger LOG = Logger.getLogger(EntityValidator.class);
-    
+
     private final EntityRepository repository = new EntityRepository();
 
     /**
@@ -28,19 +28,48 @@ public final class EntityValidator {
      * @throws CaesarException
      */
     public EntityVO save(final EntityVO vo) throws CaesarException {
-        
+
         methodLog(LOG, "save", param(Constants.VO, vo));
-        
-        CommonValidator.validateRequired("locale", vo.getLocale());
-        
-        CommonValidator.validateRequired("type", vo.getType());
-        
-        CommonValidator.validateRequired("value", vo.getValue());
-        
-        vo.setType(vo.getType().toLowerCase());
-        vo.setValue(vo.getValue().toLowerCase());
-        
+
+        validateCommonParams(vo);
+
         return repository.save(vo);
+    }
+
+    /**
+     * Save new entities
+     *
+     * @param vos
+     * @throws CaesarException
+     */
+    public void saveList(final List<EntityVO> vos) throws CaesarException {
+
+        methodLog(LOG, "saveList", param("vos", vos));
+
+        for (final EntityVO vo : vos) {
+            validateCommonParams(vo);
+        }
+
+        repository.saveList(vos);
+    }
+
+    /**
+     * Retrieve an entity
+     *
+     * @param locale
+     * @param text
+     * @return
+     * @throws CaesarException
+     */
+    public EntityVO get(final String locale, final String text) throws CaesarException {
+
+        methodLog(LOG, "get", param("locale", locale), param("text", text));
+
+        CommonValidator.validateRequired("locale", locale);
+
+        final String[] loc = locale.split("_");
+
+        return repository.get(new Locale(loc[0], loc[1]), text);
     }
 
     /**
@@ -52,13 +81,13 @@ public final class EntityValidator {
      * @throws CaesarException
      */
     public List<EntityVO> list(final String locale, final String text) throws CaesarException {
-        
+
         methodLog(LOG, "list", param("locale", locale), param("text", text));
-        
+
         CommonValidator.validateRequired("locale", locale);
-        
+
         final String[] loc = locale.split("_");
-        
+
         return repository.list(new Locale(loc[0], loc[1]), text);
     }
 
@@ -69,12 +98,30 @@ public final class EntityValidator {
      * @throws CaesarException
      */
     public void delete(final String id) throws CaesarException {
-        
+
         methodLog(LOG, "delete", param("id", id));
-        
+
         CommonValidator.validateRequired("id", id);
-        
+
         repository.delete(id);
     }
-    
+
+    /**
+     * Validate entity common parameters
+     *
+     * @param vo
+     * @throws CaesarException
+     */
+    private void validateCommonParams(final EntityVO vo) throws CaesarException {
+
+        methodLog(LOG, "validateCommonParams", param(Constants.VO, vo));
+
+        CommonValidator.validateRequired("locale", vo.getLocale());
+        CommonValidator.validateRequired("type", vo.getType());
+        CommonValidator.validateRequired("value", vo.getValue());
+
+        vo.setType(vo.getType().toLowerCase());
+        vo.setValue(vo.getValue().toLowerCase());
+    }
+
 }

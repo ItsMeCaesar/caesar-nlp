@@ -60,6 +60,31 @@ public final class EntityREST {
     }
 
     /**
+     * Save new entities
+     *
+     * @param vos
+     * @return
+     * @throws CaesarException
+     */
+    @POST
+    @Path("list")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public StatusVO saveList(final List<EntityVO> vos) throws CaesarException {
+
+        CaesarLog.getInstance().logWSEntering(LOG, "saveList", req.getRemoteAddr(), "", param("vos", vos));
+
+        try {
+
+            validator.saveList(vos);
+
+        } catch (final CaesarException e) {
+            throw CaesarException.webException(e);
+        }
+        return StatusVO.ok();
+    }
+
+    /**
      * List all entities
      *
      * @param locale
@@ -68,6 +93,7 @@ public final class EntityREST {
      * @throws CaesarException
      */
     @GET
+    @Path("list")
     @Produces(MediaType.APPLICATION_JSON)
     public List<EntityVO> list(@QueryParam("locale") final String locale, @QueryParam("text") final String text) throws CaesarException {
 
@@ -76,6 +102,29 @@ public final class EntityREST {
         try {
 
             return validator.list(locale, text);
+
+        } catch (final CaesarException e) {
+            throw CaesarException.webException(e);
+        }
+    }
+
+    /**
+     * Retrieve an entity
+     *
+     * @param locale
+     * @param text
+     * @return
+     * @throws CaesarException
+     */
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public EntityVO get(@QueryParam("locale") final String locale, @QueryParam("text") final String text) throws CaesarException {
+
+        CaesarLog.getInstance().logWSEntering(LOG, "get", req.getRemoteAddr(), "", param("locale", locale), param(text, text));
+
+        try {
+
+            return validator.get(locale, text);
 
         } catch (final CaesarException e) {
             throw CaesarException.webException(e);
