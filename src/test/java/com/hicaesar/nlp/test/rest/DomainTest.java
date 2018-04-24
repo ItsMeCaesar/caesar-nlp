@@ -74,4 +74,26 @@ public final class DomainTest extends BaseTest {
         Assert.assertTrue(items4.isEmpty());
     }
 
+    @Test
+    public void testInvalidNew() throws CaesarException {
+
+        final DomainVO vo1 = new DomainVO();
+
+        Response response = super.post("domain", Entity.json(vo1));
+        Assert.assertEquals(400, response.getStatus());
+
+        final StatusVO status = response.readEntity(StatusVO.class);
+        Assert.assertEquals("Parameter 'name' is required", status.getMsg());
+    }
+
+    @Test
+    public void testInvalidDelete() throws CaesarException {
+
+        Response response = super.delete("domain/1");
+        Assert.assertEquals(400, response.getStatus());
+
+        final StatusVO status = response.readEntity(StatusVO.class);
+        Assert.assertEquals("invalid hexadecimal representation of an ObjectId: [1]", status.getMsg());
+    }
+
 }
