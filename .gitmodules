@@ -1,0 +1,3 @@
+[submodule "src/main/ngapp"]
+	path = src/main/ngapp
+	url = https://github.com/ItsMeCaesar/caesar-nlp-web
