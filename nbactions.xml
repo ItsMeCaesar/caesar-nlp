@@ -8,7 +8,7 @@
                 <packaging>ejb</packaging>
             </packagings>
             <goals>
-                <goal>package</goal>
+                <goal>jetty:run</goal>
             </goals>
         </action>
     </actions>
