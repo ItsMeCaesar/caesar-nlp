@@ -1,5 +1,6 @@
 package com.hicaesar.nlp.repository;
 
+import com.hicaesar.nlp.repository.bson.CoreEntityBSON;
 import com.hicaesar.nlp.repository.bson.EntityTypeBSON;
 import com.hicaesar.nlp.support.Constants;
 import com.hicaesar.nlp.support.RepositoryCollectionType;
@@ -9,6 +10,7 @@ import static com.hicaesar.nlp.support.log.CaesarLog.param;
 import com.hicaesar.nlp.vo.EntityTypeVO;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
+import com.mongodb.client.model.Filters;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
@@ -23,7 +25,7 @@ public final class EntityTypeRepository {
 
     private static final Logger LOG = Logger.getLogger(EntityTypeRepository.class);
 
-   /**
+    /**
      * Save a new entity type
      *
      * @param vo Value Object to be saved
@@ -65,6 +67,21 @@ public final class EntityTypeRepository {
         }
 
         return out;
+    }
+
+    /**
+     * Delete an entity type
+     *
+     * @param typeID
+     * @throws CaesarException
+     */
+    public void delete(final String typeID) throws CaesarException {
+
+        methodLog(LOG, "delete", param("typeID", typeID));
+
+        final MongoCollection<Document> collection = RepositoryFactory.getCollection(RepositoryCollectionType.ENTITY);
+
+        collection.deleteOne(Filters.eq(EntityTypeBSON.ID_KEY, new ObjectId(typeID)));
     }
 
 }

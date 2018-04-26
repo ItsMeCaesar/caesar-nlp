@@ -1,13 +1,20 @@
 package com.hicaesar.nlp.validation;
 
 import com.hicaesar.nlp.repository.EntityTypeRepository;
+import com.hicaesar.nlp.repository.RepositoryFactory;
+import com.hicaesar.nlp.repository.bson.EntityTypeBSON;
 import com.hicaesar.nlp.support.Constants;
+import com.hicaesar.nlp.support.RepositoryCollectionType;
 import com.hicaesar.nlp.support.exception.CaesarException;
-import static com.hicaesar.nlp.support.log.CaesarLog.param;
 import static com.hicaesar.nlp.support.log.CaesarLog.methodLog;
+import static com.hicaesar.nlp.support.log.CaesarLog.param;
 import com.hicaesar.nlp.vo.EntityTypeVO;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 import java.util.List;
 import org.apache.log4j.Logger;
+import org.bson.Document;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -48,6 +55,19 @@ public final class EntityTypeValidator {
         methodLog(LOG, "list");
         
         return repository.list();
+    }
+
+    /**
+     * Delete an entity type
+     *
+     * @param typeID
+     * @throws CaesarException
+     */
+    public void delete(final String typeID) throws CaesarException {
+        
+        methodLog(LOG, "delete", param("typeID", typeID));
+        
+        repository.delete(typeID);
     }
     
 }

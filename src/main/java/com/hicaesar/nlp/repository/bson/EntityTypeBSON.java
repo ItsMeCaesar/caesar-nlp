@@ -15,7 +15,7 @@ public final class EntityTypeBSON {
 
     private static final Logger LOG = Logger.getLogger(EntityTypeBSON.class);
 
-    private static final String ID_KEY = "_id";
+    public static final String ID_KEY = "_id";
     private static final String NAME_KEY = "name";
 
     /**

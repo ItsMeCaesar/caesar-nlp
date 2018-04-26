@@ -6,13 +6,16 @@ import com.hicaesar.nlp.support.log.CaesarLog;
 import static com.hicaesar.nlp.support.log.CaesarLog.param;
 import com.hicaesar.nlp.validation.EntityTypeValidator;
 import com.hicaesar.nlp.vo.EntityTypeVO;
+import com.hicaesar.nlp.vo.StatusVO;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -74,6 +77,31 @@ public final class EntityTypeREST {
         } catch (final CaesarException e) {
             throw CaesarException.webException(e);
         }
+    }
+    
+    
+    /**
+     * Delete an entity
+     *
+     * @param typeID
+     * @return
+     * @throws CaesarException
+     */
+    @DELETE
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public StatusVO delete(@PathParam("id") final String typeID) throws CaesarException {
+
+        CaesarLog.getInstance().logWSEntering(LOG, "delete", req.getRemoteAddr(), "", param("typeID", typeID));
+
+        try {
+
+            validator.delete(typeID);
+
+        } catch (final CaesarException e) {
+            throw CaesarException.webException(e);
+        }
+        return StatusVO.ok();
     }
 
 }

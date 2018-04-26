@@ -34,6 +34,7 @@ public final class EntityTypeTest extends BaseTest {
         });
         Assert.assertTrue(items1.isEmpty());
 
+        /* POST */
         final EntityTypeVO vo1 = new EntityTypeVO();
         vo1.setName("org");
         response = super.post("entitytype", Entity.json(vo1));
@@ -48,11 +49,23 @@ public final class EntityTypeTest extends BaseTest {
         EntityTypeVO persistedVo2 = response.readEntity(EntityTypeVO.class);
         Assert.assertFalse(persistedVo2.getId().isEmpty());
 
+        /* GET */
         response = super.get("entitytype");
         Assert.assertEquals(200, response.getStatus());
         List<EntityTypeVO> items2 = response.readEntity(new GenericType<List<EntityTypeVO>>() {
         });
         Assert.assertEquals(2, items2.size());
+
+        /* DELETE */
+        response = super.delete("entitytype/" + items2.get(0).getId());
+        Assert.assertEquals(200, response.getStatus());
+
+        /* GET */
+        response = super.get("entitytype");
+        Assert.assertEquals(200, response.getStatus());
+        List<EntityTypeVO> items3 = response.readEntity(new GenericType<List<EntityTypeVO>>() {
+        });
+        Assert.assertEquals(1, items3.size());
 
     }
 
@@ -63,7 +76,7 @@ public final class EntityTypeTest extends BaseTest {
 
         Response response = super.post("entitytype", Entity.json(vo1));
         Assert.assertEquals(400, response.getStatus());
-        
+
         final StatusVO status = response.readEntity(StatusVO.class);
         Assert.assertEquals("Parameter 'name' is required", status.getMsg());
     }
