@@ -35,7 +35,7 @@ public final class EntityTest extends BaseTest {
 
         final Map<String, Object> params = new HashMap<>();
         params.put("locale", locale.toString());
-        params.put("text", "lama");
+        params.put("type", "person");
 
         /* GET LIST  */
         Response response = super.get("entity/list", params);
@@ -57,7 +57,7 @@ public final class EntityTest extends BaseTest {
 
         final EntityVO vo2 = new EntityVO();
         vo2.setLocale(locale.toString());
-        vo2.setType("misc");
+        vo2.setType("person");
         vo2.setValue("lama");
         response = super.post("entity", Entity.json(vo2));
         Assert.assertEquals(200, response.getStatus());
@@ -85,7 +85,7 @@ public final class EntityTest extends BaseTest {
         Assert.assertEquals(1, items3.size());
 
         /* GET LIST */
-        params.put("text", "unidentified");
+        params.put("value", "unidentified");
         response = super.get("entity/list", params);
         Assert.assertEquals(200, response.getStatus());
         List<EntityVO> items4 = response.readEntity(new GenericType<List<EntityVO>>() {

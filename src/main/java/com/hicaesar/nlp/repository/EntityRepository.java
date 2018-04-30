@@ -6,6 +6,7 @@ import static com.hicaesar.nlp.support.log.CaesarLog.param;
 
 import com.hicaesar.nlp.support.RepositoryCollectionType;
 import com.hicaesar.nlp.support.exception.CaesarException;
+import com.hicaesar.nlp.support.util.StringUtil;
 import com.hicaesar.nlp.vo.EntityVO;
 
 import com.mongodb.client.MongoCollection;
@@ -104,22 +105,27 @@ public final class EntityRepository {
      * Performs text filter
      *
      * @param locale
-     * @param text
+     * @param type
+     * @param value
      * @return
      * @throws CaesarException
      */
-    public List<EntityVO> list(final Locale locale, final String text) throws CaesarException {
+    public List<EntityVO> list(final Locale locale, final String type, final String value) throws CaesarException {
 
-        methodLog(LOG, "list", param("locale", locale), param("text", text));
+        methodLog(LOG, "list", param("locale", locale), param("type", type), param("value", value));
 
         final MongoCollection<Document> collection = RepositoryFactory.getCollection(RepositoryCollectionType.ENTITY);
 
-        final Bson query = Filters.and(Filters.eq(CoreEntityBSON.LOCALE_KEY, locale.toString()),
-                Filters.text(text));
+        final List<Bson> filters = new ArrayList<>();
+        filters.add(Filters.eq(CoreEntityBSON.LOCALE_KEY, locale.toString()));
+        filters.add(Filters.eq(CoreEntityBSON.TYPE_KEY, type));
+        if (StringUtil.isNotEmpty(value)) {
+            filters.add(Filters.text(value));
+        }
 
         List<EntityVO> out = new ArrayList<>();
 
-        try (MongoCursor<Document> cursor = collection.find(query)
+        try (MongoCursor<Document> cursor = collection.find(Filters.and(filters))
                 .projection(Projections.metaTextScore("score"))
                 .sort(Sorts.metaTextScore("score"))
                 .iterator()) {

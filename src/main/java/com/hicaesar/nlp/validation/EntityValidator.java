@@ -76,19 +76,22 @@ public final class EntityValidator {
      * List persisted entities
      *
      * @param locale
-     * @param text
+     * @param type
+     * @param value
      * @return Persisted entity types
      * @throws CaesarException
      */
-    public List<EntityVO> list(final String locale, final String text) throws CaesarException {
+    public List<EntityVO> list(final String locale, final String type, final String value) throws CaesarException {
 
-        methodLog(LOG, "list", param("locale", locale), param("text", text));
+        methodLog(LOG, "list", param("locale", locale), param("type", type), param("value", value));
 
         CommonValidator.validateRequired("locale", locale);
 
+        CommonValidator.validateRequired("type", type);
+
         final String[] loc = locale.split("_");
 
-        return repository.list(new Locale(loc[0], loc[1]), text);
+        return repository.list(new Locale(loc[0], loc[1]), type, value);
     }
 
     /**

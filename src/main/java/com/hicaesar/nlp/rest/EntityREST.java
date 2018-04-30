@@ -88,20 +88,21 @@ public final class EntityREST {
      * List all entities
      *
      * @param locale
-     * @param text
+     * @param type
+     * @param value
      * @return Persisted entities
      * @throws CaesarException
      */
     @GET
     @Path("list")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<EntityVO> list(@QueryParam("locale") final String locale, @QueryParam("text") final String text) throws CaesarException {
+    public List<EntityVO> list(@QueryParam("locale") final String locale, @QueryParam("type") final String type, @QueryParam("value") final String value) throws CaesarException {
 
-        CaesarLog.getInstance().logWSEntering(LOG, "list", req.getRemoteAddr(), "", param("locale", locale), param(text, text));
+        CaesarLog.getInstance().logWSEntering(LOG, "list", req.getRemoteAddr(), "", param("locale", locale), param("type", type), param("value", value));
 
         try {
 
-            return validator.list(locale, text);
+            return validator.list(locale, type, value);
 
         } catch (final CaesarException e) {
             throw CaesarException.webException(e);
