@@ -121,8 +121,8 @@ public final class EntityValidator {
         CommonValidator.validateRequired("type", vo.getType());
         CommonValidator.validateRequired("value", vo.getValue());
 
-        vo.setType(vo.getType().toLowerCase());
-        vo.setValue(vo.getValue().toLowerCase());
+        vo.setType(vo.getType().toLowerCase().trim());
+        vo.setValue(vo.getValue().toLowerCase().trim());
     }
 
 }
