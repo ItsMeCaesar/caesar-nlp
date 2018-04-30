@@ -89,6 +89,14 @@ public final class EntityTest extends BaseTest {
         });
         Assert.assertEquals(1, items3.size());
 
+        /* UPDATE */
+        items3.get(0).setValue("dalai limeira");
+        response = super.put("entity", Entity.json(items3.get(0)));
+        Assert.assertEquals(200, response.getStatus());
+        final EntityVO updatedVO1 = response.readEntity(EntityVO.class);
+        Assert.assertEquals(items3.get(0).getId(), updatedVO1.getId());
+        Assert.assertEquals("dalai limeira", updatedVO1.getValue());
+
         /* GET LIST */
         params.put("value", "unidentified");
         response = super.get("entity/list", params);

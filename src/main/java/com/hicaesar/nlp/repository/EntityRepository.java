@@ -1,6 +1,7 @@
 package com.hicaesar.nlp.repository;
 
-import com.hicaesar.nlp.repository.bson.CoreEntityBSON;
+import com.hicaesar.nlp.repository.bson.EntityBSON;
+import com.hicaesar.nlp.support.Constants;
 import static com.hicaesar.nlp.support.log.CaesarLog.methodLog;
 import static com.hicaesar.nlp.support.log.CaesarLog.param;
 
@@ -39,14 +40,33 @@ public final class EntityRepository {
      */
     public EntityVO save(final EntityVO vo) throws CaesarException {
 
-        methodLog(LOG, "save", param("vo", vo));
+        methodLog(LOG, "save", param(Constants.VO, vo));
 
         final MongoCollection<Document> collection = RepositoryFactory.getCollection(RepositoryCollectionType.ENTITY);
 
         vo.setId(new ObjectId().toHexString());
 
-        final Document model = CoreEntityBSON.builder(vo).build();
+        final Document model = EntityBSON.builder(vo).build();
         collection.insertOne(model);
+
+        return vo;
+    }
+
+    /**
+     * Update an existing entity
+     *
+     * @param vo
+     * @return
+     * @throws CaesarException
+     */
+    public EntityVO update(final EntityVO vo) throws CaesarException {
+
+        methodLog(LOG, "update", param(Constants.VO, vo));
+
+        final MongoCollection<Document> collection = RepositoryFactory.getCollection(RepositoryCollectionType.ENTITY);
+
+        final Document model = EntityBSON.builder(vo).build();
+        collection.replaceOne(Filters.eq(EntityBSON.ID_KEY, new ObjectId(vo.getId())), model);
 
         return vo;
     }
@@ -67,7 +87,7 @@ public final class EntityRepository {
         final List<Document> docs = new ArrayList<>();
         vos.forEach(vo -> {
             vo.setId(new ObjectId().toHexString());
-            docs.add(CoreEntityBSON.builder(vo).build());
+            docs.add(EntityBSON.builder(vo).build());
         });
 
         collection.insertMany(docs);
@@ -87,14 +107,14 @@ public final class EntityRepository {
 
         final MongoCollection<Document> collection = RepositoryFactory.getCollection(RepositoryCollectionType.ENTITY);
 
-        final Bson query = Filters.and(Filters.eq(CoreEntityBSON.LOCALE_KEY, locale.toString()),
-                Filters.eq(CoreEntityBSON.VALUE_KEY, text));
+        final Bson query = Filters.and(Filters.eq(EntityBSON.LOCALE_KEY, locale.toString()),
+                Filters.eq(EntityBSON.VALUE_KEY, text));
 
         EntityVO out = new EntityVO();
 
         try (MongoCursor<Document> cursor = collection.find(query).iterator()) {
             if (cursor.hasNext()) {
-                out = CoreEntityBSON.parse(cursor.next());
+                out = EntityBSON.parse(cursor.next());
             }
         }
 
@@ -117,8 +137,8 @@ public final class EntityRepository {
         final MongoCollection<Document> collection = RepositoryFactory.getCollection(RepositoryCollectionType.ENTITY);
 
         final List<Bson> filters = new ArrayList<>();
-        filters.add(Filters.eq(CoreEntityBSON.LOCALE_KEY, locale.toString()));
-        filters.add(Filters.eq(CoreEntityBSON.TYPE_KEY, type));
+        filters.add(Filters.eq(EntityBSON.LOCALE_KEY, locale.toString()));
+        filters.add(Filters.eq(EntityBSON.TYPE_KEY, type));
         if (StringUtil.isNotEmpty(value)) {
             filters.add(Filters.text(value));
         }
@@ -130,7 +150,7 @@ public final class EntityRepository {
                 .sort(Sorts.metaTextScore("score"))
                 .iterator()) {
             while (cursor.hasNext()) {
-                out.add(CoreEntityBSON.parse(cursor.next()));
+                out.add(EntityBSON.parse(cursor.next()));
             }
         }
 
@@ -149,7 +169,7 @@ public final class EntityRepository {
 
         final MongoCollection<Document> collection = RepositoryFactory.getCollection(RepositoryCollectionType.ENTITY);
 
-        collection.deleteOne(Filters.eq(CoreEntityBSON.ID_KEY, new ObjectId(id)));
+        collection.deleteOne(Filters.eq(EntityBSON.ID_KEY, new ObjectId(id)));
     }
 
 }

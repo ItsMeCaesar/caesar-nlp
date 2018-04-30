@@ -13,9 +13,9 @@ import org.bson.types.ObjectId;
  *
  * @author samuelwaskow
  */
-public final class CoreEntityBSON {
+public final class EntityBSON {
 
-    private static final Logger LOG = Logger.getLogger(CoreEntityBSON.class);
+    private static final Logger LOG = Logger.getLogger(EntityBSON.class);
 
     public static final String ID_KEY = "_id";
     public static final String LOCALE_KEY = "locale";
@@ -25,7 +25,7 @@ public final class CoreEntityBSON {
     /**
      * Private Constructor
      */
-    private CoreEntityBSON() {
+    private EntityBSON() {
         super();
     }
 

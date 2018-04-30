@@ -21,7 +21,7 @@ public final class EntityValidator {
     private final EntityRepository repository = new EntityRepository();
 
     /**
-     * Save a new entity type
+     * Save a new entity
      *
      * @param vo Value Object to be saved
      * @return Persisted value object
@@ -34,6 +34,24 @@ public final class EntityValidator {
         validateCommonParams(vo);
 
         return repository.save(vo);
+    }
+
+    /**
+     * Update an existing entity
+     *
+     * @param vo Value Object to be saved
+     * @return Persisted value object
+     * @throws CaesarException
+     */
+    public EntityVO update(final EntityVO vo) throws CaesarException {
+
+        methodLog(LOG, "update", param(Constants.VO, vo));
+
+        CommonValidator.validateRequired("id", vo.getId());
+
+        validateCommonParams(vo);
+
+        return repository.update(vo);
     }
 
     /**
