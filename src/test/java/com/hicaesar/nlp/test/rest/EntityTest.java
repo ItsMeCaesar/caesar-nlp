@@ -42,7 +42,12 @@ public final class EntityTest extends BaseTest {
         Assert.assertEquals(200, response.getStatus());
         List<EntityVO> items1 = response.readEntity(new GenericType<List<EntityVO>>() {
         });
-        Assert.assertTrue(items1.isEmpty());
+        for (final EntityVO e : items1) {
+            response = super.delete("entity/" + e.getId());
+            Assert.assertEquals(200, response.getStatus());
+            StatusVO status = response.readEntity(StatusVO.class);
+            Assert.assertTrue(status.isOk());
+        }
 
         /* POST */
         final EntityVO vo1 = new EntityVO();
