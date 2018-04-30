@@ -32,7 +32,7 @@ public final class EntityTypeValidator {
         
         CommonValidator.validateRequired("name", vo.getName());
         
-        vo.setName(vo.getName().toLowerCase());
+        vo.setName(vo.getName().toLowerCase().trim());
         
         return repository.save(vo);
     }
