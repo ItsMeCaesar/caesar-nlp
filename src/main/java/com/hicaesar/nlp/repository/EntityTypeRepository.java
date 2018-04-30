@@ -1,6 +1,5 @@
 package com.hicaesar.nlp.repository;
 
-import com.hicaesar.nlp.repository.bson.CoreEntityBSON;
 import com.hicaesar.nlp.repository.bson.EntityTypeBSON;
 import com.hicaesar.nlp.support.Constants;
 import com.hicaesar.nlp.support.RepositoryCollectionType;
