@@ -59,6 +59,14 @@ public final class DomainTest extends BaseTest {
         Assert.assertEquals(1, items2.size());
         Assert.assertFalse(items2.get(0).getEntitySynonyms().isEmpty());
         Assert.assertFalse(items2.get(0).getIntents().isEmpty());
+        
+        /* UPDATE */
+        items2.get(0).setName("Local Domain");
+        response = super.put("domain", Entity.json(items2.get(0)));
+        Assert.assertEquals(200, response.getStatus());
+        DomainVO updatedVO = response.readEntity(DomainVO.class);
+        Assert.assertEquals(items2.get(0).getId(), updatedVO.getId());
+        Assert.assertEquals("Local Domain", updatedVO.getName());
 
         /* DELETE */
         response = super.delete("domain/" + items2.get(0).getId());

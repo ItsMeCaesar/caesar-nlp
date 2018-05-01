@@ -31,18 +31,29 @@ public final class DomainValidator {
 
         methodLog(LOG, "save", param(Constants.VO, vo));
 
-        CommonValidator.validateRequired("name", vo.getName());
-
-        CommonValidator.validateRequired("locale", vo.getLocale());
-
-        CommonValidator.validateRequired("intents", vo.getIntents());
-
-        for (final IntentVO intent : vo.getIntents()) {
-
-            CommonValidator.validateRequired("text", intent.getText());
-        }
+        validateCommonParameters(vo);
 
         repository.save(vo);
+
+        return vo;
+    }
+
+    /**
+     * Update a domain
+     *
+     * @param vo
+     * @return
+     * @throws CaesarException
+     */
+    public DomainVO update(final DomainVO vo) throws CaesarException {
+
+        methodLog(LOG, "update", param(Constants.VO, vo));
+        
+        CommonValidator.validateRequired(Constants.ID, vo.getId());
+
+        validateCommonParameters(vo);
+
+        repository.update(vo);
 
         return vo;
     }
@@ -56,7 +67,7 @@ public final class DomainValidator {
     public List<DomainVO> list() throws CaesarException {
 
         methodLog(LOG, "list");
-        
+
         return repository.list();
     }
 
@@ -68,11 +79,33 @@ public final class DomainValidator {
      */
     public void delete(final String id) throws CaesarException {
 
-        methodLog(LOG, "delete", param("id", id));
-        
-        CommonValidator.validateRequired("id", id);
+        methodLog(LOG, "delete", param(Constants.ID, id));
+
+        CommonValidator.validateRequired(Constants.ID, id);
 
         repository.delete(id);
+    }
+
+    /**
+     * Validate common parameters when saving or updating a domain
+     *
+     * @param vo
+     * @throws CaesarException
+     */
+    private void validateCommonParameters(final DomainVO vo) throws CaesarException {
+
+        methodLog(LOG, "validateCommonParameters", param(Constants.VO, vo));
+
+        CommonValidator.validateRequired("name", vo.getName());
+
+        CommonValidator.validateRequired("locale", vo.getLocale());
+
+        CommonValidator.validateRequired("intents", vo.getIntents());
+
+        for (final IntentVO intent : vo.getIntents()) {
+
+            CommonValidator.validateRequired("text", intent.getText());
+        }
     }
 
 }

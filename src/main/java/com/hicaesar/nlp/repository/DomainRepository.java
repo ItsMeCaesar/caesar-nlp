@@ -43,6 +43,24 @@ public final class DomainRepository {
     }
 
     /**
+     * Update a domain
+     *
+     * @param vo
+     * @return
+     * @throws CaesarException
+     */
+    public DomainVO update(final DomainVO vo) throws CaesarException {
+
+        methodLog(LOG, "update", param("vo", vo));
+
+        final MongoCollection<Document> collection = RepositoryFactory.getCollection(RepositoryCollectionType.DOMAIN);
+
+        collection.replaceOne(eq(DomainBSON.ID_KEY, new ObjectId(vo.getId())), DomainBSON.builder(vo).build());
+
+        return vo;
+    }
+
+    /**
      * Retrieve a list of domains
      *
      * @return
