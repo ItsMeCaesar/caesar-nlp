@@ -2,9 +2,11 @@ package com.hicaesar.nlp.test;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.hicaesar.nlp.repository.RepositoryFactory;
+import com.hicaesar.nlp.support.ConstantType;
 import com.hicaesar.nlp.support.exception.CaesarException;
 import com.hicaesar.nlp.support.exception.CaesarExceptionMapper;
 import static com.hicaesar.nlp.support.log.CaesarLog.methodLog;
+import com.mongodb.MongoClientURI;
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodProcess;
 import de.flapdoodle.embed.mongo.MongodStarter;
@@ -75,10 +77,13 @@ public class BaseTest extends JerseyTest {
         if (!setUpIsDone) {
 
             final MongodStarter starter = MongodStarter.getDefaultInstance();
+            
+            final MongoClientURI uri = new MongoClientURI(ConstantType.NOSQL_URI.propertyValue());
+            final String[] connParams = uri.getHosts().get(0).split(":");
 
             final IMongodConfig mongodConfig = new MongodConfigBuilder()
                     .version(Version.Main.PRODUCTION)
-                    .net(new Net("localhost", 12345, Network.localhostIsIPv6()))
+                    .net(new Net(connParams[0], Integer.parseInt(connParams[1]), Network.localhostIsIPv6()))
                     .build();
 
             mongodExecutable = starter.prepare(mongodConfig);
