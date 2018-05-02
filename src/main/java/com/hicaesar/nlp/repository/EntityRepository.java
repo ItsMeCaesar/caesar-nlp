@@ -138,7 +138,10 @@ public final class EntityRepository {
 
         final List<Bson> filters = new ArrayList<>();
         filters.add(Filters.eq(EntityBSON.LOCALE_KEY, locale.toString()));
-        filters.add(Filters.eq(EntityBSON.TYPE_KEY, type));
+        
+        if (StringUtil.isNotEmpty(type)) {
+            filters.add(Filters.eq(EntityBSON.TYPE_KEY, type));
+        }
         if (StringUtil.isNotEmpty(value)) {
             filters.add(Filters.text(value));
         }

@@ -1,6 +1,7 @@
 package com.hicaesar.nlp.validation;
 
 import com.hicaesar.nlp.repository.*;
+import com.hicaesar.nlp.services.IntentEntityService;
 import com.hicaesar.nlp.support.Constants;
 import com.hicaesar.nlp.support.exception.CaesarException;
 import static com.hicaesar.nlp.support.log.CaesarLog.methodLog;
@@ -35,6 +36,8 @@ public final class DomainValidator {
 
         repository.save(vo);
 
+        Constants.THREAD_EXECUTOR.submit(new IntentEntityService(vo));
+
         return vo;
     }
 
@@ -48,12 +51,14 @@ public final class DomainValidator {
     public DomainVO update(final DomainVO vo) throws CaesarException {
 
         methodLog(LOG, "update", param(Constants.VO, vo));
-        
+
         CommonValidator.validateRequired(Constants.ID, vo.getId());
 
         validateCommonParameters(vo);
 
         repository.update(vo);
+
+        Constants.THREAD_EXECUTOR.submit(new IntentEntityService(vo));
 
         return vo;
     }
