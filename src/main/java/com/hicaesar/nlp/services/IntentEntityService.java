@@ -1,6 +1,5 @@
 package com.hicaesar.nlp.services;
 
-import com.asher_stern.crf.crf.run.CrfTrainerFactory;
 import com.hicaesar.nlp.repository.DomainRepository;
 import com.hicaesar.nlp.repository.EntityRepository;
 import com.hicaesar.nlp.support.exception.CaesarException;
@@ -27,7 +26,6 @@ public final class IntentEntityService implements Runnable {
     private final DomainVO domain;
     private final DomainRepository domainRepository = new DomainRepository();
     private final EntityRepository entityRepository = new EntityRepository();
-    private final CrfTrainerFactory<String, String> trainerFactory = new CrfTrainerFactory<>();
 
     /**
      * Constructor
@@ -95,7 +93,7 @@ public final class IntentEntityService implements Runnable {
      */
     private List<EntityVO> processToken(final Locale locale, final String token, final IntentVO intent) throws CaesarException {
 
-        final MethodLog log = methodLog(LOG, "processToken", param("locale", locale), param("token", token), param("intent", intent));
+        methodLog(LOG, "processToken", param("locale", locale), param("token", token), param("intent", intent));
 
         final List<EntityVO> entities = entityRepository.list(locale, "", token);
 
