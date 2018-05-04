@@ -37,6 +37,7 @@ public final class EntityTypeTest extends BaseTest {
         /* POST */
         final EntityTypeVO vo1 = new EntityTypeVO();
         vo1.setName("org");
+        vo1.setColor("#FF0000");
         response = super.post("entitytype", Entity.json(vo1));
         Assert.assertEquals(200, response.getStatus());
         EntityTypeVO persistedVo1 = response.readEntity(EntityTypeVO.class);
@@ -44,6 +45,7 @@ public final class EntityTypeTest extends BaseTest {
 
         final EntityTypeVO vo2 = new EntityTypeVO();
         vo2.setName("person");
+        vo2.setColor("#0000FF");
         response = super.post("entitytype", Entity.json(vo2));
         Assert.assertEquals(200, response.getStatus());
         EntityTypeVO persistedVo2 = response.readEntity(EntityTypeVO.class);
@@ -55,6 +57,14 @@ public final class EntityTypeTest extends BaseTest {
         List<EntityTypeVO> items2 = response.readEntity(new GenericType<List<EntityTypeVO>>() {
         });
         Assert.assertEquals(2, items2.size());
+        
+        final EntityTypeVO persisted1 = items2.get(0);
+        Assert.assertEquals(vo1.getName(), persisted1.getName());
+        Assert.assertEquals(vo1.getColor(), persisted1.getColor());
+        
+        final EntityTypeVO persisted2 = items2.get(1);
+        Assert.assertEquals(vo2.getName(), persisted2.getName());
+        Assert.assertEquals(vo2.getColor(), persisted2.getColor());
 
         /* DELETE */
         response = super.delete("entitytype/" + items2.get(0).getId());
