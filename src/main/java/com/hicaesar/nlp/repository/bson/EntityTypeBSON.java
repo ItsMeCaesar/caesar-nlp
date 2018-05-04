@@ -17,6 +17,7 @@ public final class EntityTypeBSON {
 
     public static final String ID_KEY = "_id";
     private static final String NAME_KEY = "name";
+    private static final String COLOR_KEY = "color";
 
     /**
      * Private Constructor
@@ -80,6 +81,7 @@ public final class EntityTypeBSON {
 
             out.put(ID_KEY, StringUtil.isEmpty(vo.getId()) ? new ObjectId() : new ObjectId(vo.getId()));
             out.put(NAME_KEY, vo.getName());
+            out.put(COLOR_KEY, vo.getColor());
 
             return out;
         }
@@ -115,10 +117,12 @@ public final class EntityTypeBSON {
 
             final ObjectId id = d.getObjectId(ID_KEY);
             final String name = d.getString(NAME_KEY);
+            final String color = d.getString(COLOR_KEY);
 
             final EntityTypeVO out = new EntityTypeVO();
             out.setId(id.toHexString());
             out.setName(name);
+            out.setColor(color);
 
             return out;
         }
