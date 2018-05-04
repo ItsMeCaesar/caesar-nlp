@@ -8,6 +8,7 @@ public final class EntityTypeVO {
 
     private String id;
     private String name;
+    private String color;
 
     /**
      * Constructor
@@ -18,7 +19,7 @@ public final class EntityTypeVO {
 
     @Override
     public String toString() {
-        return "{" + "id=" + id + ", name=" + name + '}';
+        return "{id=" + id + ", name=" + name + ", color=" + color + '}';
     }
 
     /* Gets And Sets */
@@ -36,6 +37,14 @@ public final class EntityTypeVO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
 }

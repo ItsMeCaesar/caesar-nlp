@@ -32,6 +32,8 @@ public final class EntityTypeValidator {
         
         CommonValidator.validateRequired("name", vo.getName());
         
+        CommonValidator.validateRequired("color", vo.getColor());
+        
         vo.setName(vo.getName().toLowerCase().trim());
         
         return repository.save(vo);
