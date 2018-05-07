@@ -15,7 +15,7 @@
     
     <profiles>
         <profile>
-            <id>DEVELOPMENT</id>
+            <id>development</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
@@ -85,7 +85,7 @@
         </profile>
         
         <profile>
-            <id>STAGING</id>
+            <id>staging</id>
             <properties>
                 <log4j_appender>ALL, consoleAppender</log4j_appender>
                 <nosql_uri>mongodb://local:temp123@ds127034.mlab.com:27034/caesardev</nosql_uri>
@@ -127,9 +127,10 @@
         </profile>
         
         <profile>
-            <id>PRODUCTION</id>
+            <id>production</id>
             <properties>
                 <log4j_appender>INFO, consoleAppender</log4j_appender>
+                <nosql_uri>mongodb://local:temp123@ds127034.mlab.com:27034/caesardev</nosql_uri>
             </properties>
             <build>
                 <plugins>
