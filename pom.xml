@@ -161,7 +161,7 @@
                                     <arguments>
                                         <argument>build</argument>
                                         <argument>--prod</argument>
-                                        <argument>--base-href=/caesar-nlp/ng/</argument>
+                                        <argument>--base-href=/</argument>
                                     </arguments>
                                 </configuration>
                                 <goals>
@@ -170,6 +170,27 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>2.6</version>
+                        <executions>
+                            <execution>
+                                <phase>process-sources</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/src/main/webapp</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>${project.basedir}/src/main/ngapp/dist</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    
                 </plugins>
             </build>
         </profile>
