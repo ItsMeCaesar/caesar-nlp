@@ -9,7 +9,7 @@
             </packagings>
             <goals>
                 <goal>jetty:run</goal>
-                <goal>-PSTAGING</goal>
+                <goal>-Pstaging</goal>
             </goals>
         </action>
     </actions>
