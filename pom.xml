@@ -119,8 +119,6 @@
                             <stopKey>foo</stopKey>
                             <stopWait>10</stopWait>
                         </configuration>
-                        <dependencies>
-                        </dependencies>
                     </plugin>             
                 </plugins>
             </build>            
@@ -162,6 +160,7 @@
                                     <executable>ng</executable>
                                     <arguments>
                                         <argument>build</argument>
+                                        <argument>--prod</argument>
                                         <argument>--base-href=/caesar-nlp/ng/</argument>
                                     </arguments>
                                 </configuration>
