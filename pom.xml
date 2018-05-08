@@ -16,9 +16,6 @@
     <profiles>
         <profile>
             <id>development</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <properties>
                 <log4j_appender>ALL, consoleAppender</log4j_appender>
                 <nosql_uri>mongodb://localhost:12345/development</nosql_uri>
