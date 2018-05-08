@@ -10,16 +10,6 @@
                 <nosql_uri>mongodb://local:temp123@ds127034.mlab.com:27034/caesardev</nosql_uri>
             </properties>
             
-            <dependencies>
-                
-                <!-- SERVLET -->
-                <dependency>
-                    <groupId>javax.servlet</groupId>
-                    <artifactId>javax.servlet-api</artifactId>
-                    <version>3.0.1</version>
-                    <scope>provided</scope>
-                </dependency>
-            </dependencies>
             <build>
                 <plugins>
                     <!-- EXEC -->
