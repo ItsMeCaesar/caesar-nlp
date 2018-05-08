@@ -70,9 +70,6 @@
                             <webAppConfig>
                                 <webInfIncludeJarPattern>^$</webInfIncludeJarPattern>
                             </webAppConfig>
-                            <httpConnector>
-                                <port>8888</port>
-                            </httpConnector>
                             <stopPort>9966</stopPort>
                             <stopKey>foo</stopKey>
                             <stopWait>10</stopWait>
@@ -112,9 +109,6 @@
                             <webAppConfig>
                                 <webInfIncludeJarPattern>^$</webInfIncludeJarPattern>
                             </webAppConfig>
-                            <httpConnector>
-                                <port>8888</port>
-                            </httpConnector>
                             <stopPort>9966</stopPort>
                             <stopKey>foo</stopKey>
                             <stopWait>10</stopWait>

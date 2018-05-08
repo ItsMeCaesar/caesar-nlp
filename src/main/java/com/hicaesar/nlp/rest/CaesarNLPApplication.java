@@ -12,7 +12,7 @@ import javax.ws.rs.core.Application;
  *
  * @author samuelwaskow
  */
-@ApplicationPath("/")
+@ApplicationPath("api")
 public final class CaesarNLPApplication extends Application {
 
     /**

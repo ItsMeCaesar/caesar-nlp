@@ -7,10 +7,5 @@
         <servlet-class>com.hicaesar.nlp.StartupServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-    
-    <servlet-mapping>
-        <servlet-name>jsp</servlet-name>
-        <url-pattern>*.html</url-pattern>
-    </servlet-mapping>
   
 </web-app>
