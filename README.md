@@ -10,6 +10,11 @@ This Java project extracts valued information using natural language processing.
 
 This is a free open-source project. See LICENSE file.
 
+Demo
+=====
+
+https://caesar-nlp.herokuapp.com/
+
 
 Get Started
 ===========
@@ -18,6 +23,5 @@ Get Started
 * Run `npm install -g @angular/cli` for Angular CLI
 * Install Apache Maven or use any Maven friendly IDE
     * Run `git submodule foreach git pull origin master` to update the web submodule
-    * Run `mvn package` command to build the project
-* Install Eclipse Jetty as application server
-    * Found at http://www.eclipse.org/jetty/download.html
+    * Run `mvn package -Pdevelopment` command to build the project
+    * Run `mvn jetty:run -Pstaging` command to run the app
