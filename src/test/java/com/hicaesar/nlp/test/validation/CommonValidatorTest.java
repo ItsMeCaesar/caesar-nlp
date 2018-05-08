@@ -2,10 +2,8 @@ package com.hicaesar.nlp.test.validation;
 
 import com.hicaesar.nlp.support.exception.CaesarException;
 import com.hicaesar.nlp.validation.CommonValidator;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.junit.Test;
 
 /**
@@ -21,9 +19,6 @@ public final class CommonValidatorTest {
         CommonValidator.validateRequired("collection", Collections.emptyMap());
         CommonValidator.validateRequired("collection", Collections.emptySet());
         CommonValidator.validateRequired("collection", (Collection<?>) null);
-
-        final ArrayList<FormDataBodyPart> bodyParts = new ArrayList<>();
-        CommonValidator.validateRequired("collection", bodyParts);
 
     }
 
