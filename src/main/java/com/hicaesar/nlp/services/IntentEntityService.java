@@ -7,10 +7,12 @@ import static com.hicaesar.nlp.support.log.CaesarLog.methodLog;
 import static com.hicaesar.nlp.support.log.CaesarLog.param;
 import com.hicaesar.nlp.support.log.MethodLog;
 import com.hicaesar.nlp.support.util.LocaleUtil;
+import com.hicaesar.nlp.validation.ReportValidator;
 import com.hicaesar.nlp.vo.DomainVO;
 import com.hicaesar.nlp.vo.EntityVO;
 import com.hicaesar.nlp.vo.IntentEntityVO;
 import com.hicaesar.nlp.vo.IntentVO;
+import com.hicaesar.nlp.vo.ReportVO;
 import java.util.List;
 import java.util.Locale;
 import org.apache.log4j.Logger;
@@ -26,6 +28,7 @@ public final class IntentEntityService implements Runnable {
     private final DomainVO domain;
     private final DomainRepository domainRepository = new DomainRepository();
     private final EntityRepository entityRepository = new EntityRepository();
+    private final ReportValidator reportValidator = new ReportValidator();
 
     /**
      * Constructor
@@ -74,7 +77,7 @@ public final class IntentEntityService implements Runnable {
 
             if (token.length() > 2) {
 
-                List<EntityVO> entities = processToken(LocaleUtil.getLocale(locale), token, intent);
+                final List<EntityVO> entities = processToken(LocaleUtil.getLocale(locale), token, intent);
 
                 log.logDebug(entities.toString());
             }
@@ -118,7 +121,7 @@ public final class IntentEntityService implements Runnable {
      */
     private void addIntentEntity(final IntentVO intent, final EntityVO entity) {
 
-        methodLog(LOG, "addIntentEntity", param("intent", intent), param("entity", entity));
+        final MethodLog log = methodLog(LOG, "addIntentEntity", param("intent", intent), param("entity", entity));
 
         final IntentEntityVO newEntity = new IntentEntityVO();
         newEntity.setValue(entity.getValue());
@@ -129,6 +132,13 @@ public final class IntentEntityService implements Runnable {
         newEntity.setEnd(start + length);
 
         intent.getEntities().add(newEntity);
+
+        try {
+            final String text = "Domain: " + domain.getName() + " | A new entity [" + entity.getValue() + ", " + entity.getType() + "] has been added to the intent [" + intent.getText() + "].";
+            reportValidator.save(new ReportVO(text));
+        } catch (final CaesarException e) {
+            log.logError(e);
+        }
     }
 
 }

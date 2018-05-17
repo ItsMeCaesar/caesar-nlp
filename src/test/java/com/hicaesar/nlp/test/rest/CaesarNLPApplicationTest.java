@@ -6,6 +6,7 @@ import com.hicaesar.nlp.rest.CaesarNLPApplication;
 import com.hicaesar.nlp.rest.DomainREST;
 import com.hicaesar.nlp.rest.EntityREST;
 import com.hicaesar.nlp.rest.EntityTypeREST;
+import com.hicaesar.nlp.rest.ReportREST;
 
 import java.util.Set;
 import org.junit.Assert;
@@ -23,7 +24,7 @@ public final class CaesarNLPApplicationTest {
     public void testGetClasses() {
 
         final Set<Class<?>> endpoints = app.getClasses();
-        Assert.assertEquals(5, endpoints.size());
+        Assert.assertEquals(6, endpoints.size());
 
         Assert.assertTrue(endpoints.contains(ResponseCORSFilter.class));
         Assert.assertTrue(endpoints.contains(CaesarExceptionMapper.class));
@@ -31,6 +32,7 @@ public final class CaesarNLPApplicationTest {
         Assert.assertTrue(endpoints.contains(DomainREST.class));
         Assert.assertTrue(endpoints.contains(EntityREST.class));
         Assert.assertTrue(endpoints.contains(EntityTypeREST.class));
+        Assert.assertTrue(endpoints.contains(ReportREST.class));
 
     }
 

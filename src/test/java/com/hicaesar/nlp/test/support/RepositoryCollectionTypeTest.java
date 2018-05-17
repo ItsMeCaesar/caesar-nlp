@@ -12,11 +12,12 @@ public final class RepositoryCollectionTypeTest {
 
     @Test
     public void test() {
-        Assert.assertEquals(3, RepositoryCollectionType.values().length);
+        Assert.assertEquals(4, RepositoryCollectionType.values().length);
         
         Assert.assertEquals(RepositoryCollectionType.ENTITY, RepositoryCollectionType.valueOf("ENTITY"));
         Assert.assertEquals(RepositoryCollectionType.DOMAIN, RepositoryCollectionType.valueOf("DOMAIN"));
         Assert.assertEquals(RepositoryCollectionType.ENTITY_TYPE, RepositoryCollectionType.valueOf("ENTITY_TYPE"));
+        Assert.assertEquals(RepositoryCollectionType.REPORT, RepositoryCollectionType.valueOf("REPORT"));
     }
 
 }

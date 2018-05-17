@@ -25,3 +25,11 @@ Get Started
     * Run `git submodule foreach git pull origin master` to update the web submodule
     * Run `mvn package -Pdevelopment` command to build the project
     * Run `mvn jetty:run -Pstaging` command to run the app
+
+
+Contributing
+============
+
+There is a great need for contributions to Caesar and patches are more than welcome. The goal is to make contributions clear, make sure there is a trail for where the code has come from, and most importantly, to give credit where credit is due!
+
+Sending pull requests is the preferred method for receiving contributions. The workflow to be followed is at the [GitHub's guide](https://help.github.com/articles/fork-a-repo/).

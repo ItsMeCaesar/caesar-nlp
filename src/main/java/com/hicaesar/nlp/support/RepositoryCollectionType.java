@@ -8,6 +8,7 @@ public enum RepositoryCollectionType {
 
     DOMAIN,
     ENTITY,
-    ENTITY_TYPE;
+    ENTITY_TYPE,
+    REPORT;
 
 }

@@ -37,6 +37,7 @@ public final class CaesarNLPApplication extends Application {
         resources.add(DomainREST.class);
         resources.add(EntityREST.class);
         resources.add(EntityTypeREST.class);
+        resources.add(ReportREST.class);
 
         return resources;
     }
